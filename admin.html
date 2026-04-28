@@ -92,28 +92,7 @@
                                 <th>Действия</th>
                             </tr>
                         </thead>
-                        <tbody id="jobs-list">
-                            <tr>
-                                <td>Водитель</td>
-                                <td>150 000 KZT</td>
-                                <td>Алматы</td>
-                                <td><span class="badge bg-success">Активна</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-outline-primary me-2">Редактировать</button>
-                                    <button class="btn btn-sm btn-outline-danger">Удалить</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Строитель</td>
-                                <td>120 000 KZT</td>
-                                <td>Астана</td>
-                                <td><span class="badge bg-success">Активна</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-outline-primary me-2">Редактировать</button>
-                                    <button class="btn btn-sm btn-outline-danger">Удалить</button>
-                                </td>
-                            </tr>
-                        </tbody>
+                        <tbody id="jobs-list"></tbody>
                     </table>
                 </div>
             </div>
@@ -134,26 +113,7 @@
                                 <th>Действия</th>
                             </tr>
                         </thead>
-                        <tbody id="employers-list">
-                            <tr>
-                                <td>Компания А</td>
-                                <td>★★★★☆ (4.0)</td>
-                                <td><span class="badge bg-success">Verified</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-outline-primary me-2">Редактировать</button>
-                                    <button class="btn btn-sm btn-outline-danger">Удалить</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Компания Б</td>
-                                <td>★★★☆☆ (3.0)</td>
-                                <td><span class="badge bg-warning">На проверке</span></td>
-                                <td>
-                                    <button class="btn btn-sm btn-outline-primary me-2">Редактировать</button>
-                                    <button class="btn btn-sm btn-outline-danger">Удалить</button>
-                                </td>
-                            </tr>
-                        </tbody>
+                        <tbody id="employers-list"></tbody>
                     </table>
                 </div>
             </div>
@@ -200,7 +160,10 @@
 
             <!-- Отзывы -->
             <div class="tab-pane fade" id="reviews" role="tabpanel">
-                <h3>Управление отзывами</h3>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3>Управление отзывами</h3>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addReviewModal">Добавить отзыв</button>
+                </div>
                 <div class="card p-3">
                     <table class="table table-hover">
                         <thead>
@@ -212,28 +175,7 @@
                                 <th>Действия</th>
                             </tr>
                         </thead>
-                        <tbody id="reviews-list">
-                            <tr>
-                                <td>Компания А</td>
-                                <td>Иван И.</td>
-                                <td>Отличная компания, рекомендую!</td>
-                                <td>15.04.2023</td>
-                                <td>
-                                    <button class="btn btn-sm btn-outline-primary me-2">Одобрить</button>
-                                    <button class="btn btn-sm btn-outline-danger">Удалить</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Компания А</td>
-                                <td>Мария М.</td>
-                                <td>Хорошие условия работы.</td>
-                                <td>10.03.2023</td>
-                                <td>
-                                    <button class="btn btn-sm btn-outline-primary me-2">Одобрить</button>
-                                    <button class="btn btn-sm btn-outline-danger">Удалить</button>
-                                </td>
-                            </tr>
-                        </tbody>
+                        <tbody id="reviews-list"></tbody>
                     </table>
                 </div>
             </div>
@@ -252,25 +194,25 @@
                     <form>
                         <div class="mb-3">
                             <label class="form-label">Название вакансии</label>
-                            <input type="text" class="form-control" required>
+                            <input type="text" class="form-control" id="jobTitleInput" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Зарплата</label>
-                            <input type="text" class="form-control" required>
+                            <input type="text" class="form-control" id="jobSalaryInput" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Локация</label>
-                            <input type="text" class="form-control" required>
+                            <input type="text" class="form-control" id="jobLocationInput" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Описание</label>
-                            <textarea class="form-control" rows="3"></textarea>
+                            <textarea class="form-control" rows="3" id="jobDescriptionInput"></textarea>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-                    <button type="button" class="btn btn-primary">Добавить</button>
+                    <button type="button" class="btn btn-primary" onclick="addJob()">Добавить</button>
                 </div>
             </div>
         </div>
@@ -287,22 +229,240 @@
                     <form>
                         <div class="mb-3">
                             <label class="form-label">Название компании</label>
-                            <input type="text" class="form-control" required>
+                            <input type="text" class="form-control" id="employerNameInput" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Описание</label>
-                            <textarea class="form-control" rows="3"></textarea>
+                            <textarea class="form-control" rows="3" id="employerDescriptionInput"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Рейтинг (0-5)</label>
+                            <input type="number" class="form-control" id="employerRatingInput" min="0" max="5" step="0.1" value="4.0">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Статус</label>
+                            <select class="form-control" id="employerStatusInput">
+                                <option value="verified">Проверен</option>
+                                <option value="pending">На проверке</option>
+                                <option value="risky">Риск</option>
+                            </select>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-                    <button type="button" class="btn btn-primary">Добавить</button>
+                    <button type="button" class="btn btn-primary" onclick="addEmployer()">Добавить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addReviewModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Добавить отзыв</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Компания</label>
+                            <input type="text" class="form-control" id="reviewCompanyInput" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Автор</label>
+                            <input type="text" class="form-control" id="reviewAuthorInput" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Текст отзыва</label>
+                            <textarea class="form-control" rows="3" id="reviewTextInput" required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-primary" onclick="addReview()">Добавить</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const SHARED_DATA_KEY = 'migrantkz_shared_data_v1';
+
+        const defaultData = {
+            jobs: [
+                { id: Date.now() + 1, title: 'Водитель-международник', salary: '250 000 ₸', location: 'Алматы', company: 'ТОО "КазТрансЛогистик"', tags: ['Транспорт', 'Опыт от 3 лет'] },
+                { id: Date.now() + 2, title: 'Сварщик', salary: '180 000 ₸', location: 'Астана', company: 'ТОО "КазСтройМонтаж"', tags: ['Строительство', 'Сертификат'] },
+                { id: Date.now() + 3, title: 'Повар', salary: '150 000 ₸', location: 'Шымкент', company: 'Ресторан "Шахрияр"', tags: ['Общепит', 'Опыт от 1 года'] }
+            ],
+            employers: [
+                { id: Date.now() + 4, name: 'КазТрансЛогистик', rating: 4.5, status: 'verified', description: 'Надежный работодатель.' }
+            ],
+            reviews: [
+                { id: Date.now() + 5, company: 'КазТрансЛогистик', author: 'Александр И.', text: 'Отличная компания! Работаю уже 2 года, всегда вовремя платят.', date: '15.04.2026' }
+            ]
+        };
+
+        let sharedData = null;
+
+        function loadData() {
+            const raw = localStorage.getItem(SHARED_DATA_KEY);
+            if (raw) {
+                try {
+                    sharedData = JSON.parse(raw);
+                } catch (e) {
+                    sharedData = JSON.parse(JSON.stringify(defaultData));
+                }
+            } else {
+                sharedData = JSON.parse(JSON.stringify(defaultData));
+                saveData();
+            }
+            sharedData.jobs = Array.isArray(sharedData.jobs) ? sharedData.jobs : [];
+            sharedData.employers = Array.isArray(sharedData.employers) ? sharedData.employers : [];
+            sharedData.reviews = Array.isArray(sharedData.reviews) ? sharedData.reviews : [];
+        }
+
+        function saveData() {
+            localStorage.setItem(SHARED_DATA_KEY, JSON.stringify(sharedData));
+        }
+
+        function statusBadge(status) {
+            if (status === 'verified') return '<span class="badge bg-success">Проверен</span>';
+            if (status === 'risky') return '<span class="badge bg-danger">Риск</span>';
+            return '<span class="badge bg-warning text-dark">На проверке</span>';
+        }
+
+        function renderJobs() {
+            const tbody = document.getElementById('jobs-list');
+            tbody.innerHTML = sharedData.jobs.map((job) => `
+                <tr>
+                    <td>${job.title}</td>
+                    <td>${job.salary}</td>
+                    <td>${job.location}</td>
+                    <td><span class="badge bg-success">Активна</span></td>
+                    <td><button class="btn btn-sm btn-outline-danger" onclick="deleteJob(${job.id})">Удалить</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function renderEmployers() {
+            const tbody = document.getElementById('employers-list');
+            tbody.innerHTML = sharedData.employers.map((employer) => `
+                <tr>
+                    <td>${employer.name}</td>
+                    <td>★ ${Number(employer.rating || 0).toFixed(1)}</td>
+                    <td>${statusBadge(employer.status)}</td>
+                    <td><button class="btn btn-sm btn-outline-danger" onclick="deleteEmployer(${employer.id})">Удалить</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function renderReviews() {
+            const tbody = document.getElementById('reviews-list');
+            tbody.innerHTML = sharedData.reviews.map((review) => `
+                <tr>
+                    <td>${review.company}</td>
+                    <td>${review.author}</td>
+                    <td>${review.text}</td>
+                    <td>${review.date}</td>
+                    <td><button class="btn btn-sm btn-outline-danger" onclick="deleteReview(${review.id})">Удалить</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function rerender() {
+            renderJobs();
+            renderEmployers();
+            renderReviews();
+        }
+
+        function addJob() {
+            const title = document.getElementById('jobTitleInput').value.trim();
+            const salary = document.getElementById('jobSalaryInput').value.trim();
+            const location = document.getElementById('jobLocationInput').value.trim();
+            const description = document.getElementById('jobDescriptionInput').value.trim();
+            if (!title || !salary || !location) {
+                alert('Заполните обязательные поля вакансии.');
+                return;
+            }
+            sharedData.jobs.unshift({
+                id: Date.now(),
+                title,
+                salary,
+                location,
+                company: description || 'Компания не указана',
+                tags: []
+            });
+            saveData();
+            rerender();
+            bootstrap.Modal.getInstance(document.getElementById('addJobModal')).hide();
+            document.getElementById('jobTitleInput').value = '';
+            document.getElementById('jobSalaryInput').value = '';
+            document.getElementById('jobLocationInput').value = '';
+            document.getElementById('jobDescriptionInput').value = '';
+        }
+
+        function addEmployer() {
+            const name = document.getElementById('employerNameInput').value.trim();
+            const description = document.getElementById('employerDescriptionInput').value.trim();
+            const rating = parseFloat(document.getElementById('employerRatingInput').value || '0');
+            const status = document.getElementById('employerStatusInput').value;
+            if (!name) {
+                alert('Введите название работодателя.');
+                return;
+            }
+            sharedData.employers.unshift({ id: Date.now(), name, rating, status, description });
+            saveData();
+            rerender();
+            bootstrap.Modal.getInstance(document.getElementById('addEmployerModal')).hide();
+            document.getElementById('employerNameInput').value = '';
+            document.getElementById('employerDescriptionInput').value = '';
+        }
+
+        function addReview() {
+            const company = document.getElementById('reviewCompanyInput').value.trim();
+            const author = document.getElementById('reviewAuthorInput').value.trim();
+            const text = document.getElementById('reviewTextInput').value.trim();
+            if (!company || !author || !text) {
+                alert('Заполните все поля отзыва.');
+                return;
+            }
+            const now = new Date();
+            const date = String(now.getDate()).padStart(2, '0') + '.' + String(now.getMonth() + 1).padStart(2, '0') + '.' + now.getFullYear();
+            sharedData.reviews.unshift({ id: Date.now(), company, author, text, date });
+            saveData();
+            rerender();
+            bootstrap.Modal.getInstance(document.getElementById('addReviewModal')).hide();
+            document.getElementById('reviewCompanyInput').value = '';
+            document.getElementById('reviewAuthorInput').value = '';
+            document.getElementById('reviewTextInput').value = '';
+        }
+
+        function deleteJob(id) {
+            sharedData.jobs = sharedData.jobs.filter((job) => job.id !== id);
+            saveData();
+            renderJobs();
+        }
+
+        function deleteEmployer(id) {
+            sharedData.employers = sharedData.employers.filter((employer) => employer.id !== id);
+            saveData();
+            renderEmployers();
+        }
+
+        function deleteReview(id) {
+            sharedData.reviews = sharedData.reviews.filter((review) => review.id !== id);
+            saveData();
+            renderReviews();
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            loadData();
+            rerender();
+        });
+    </script>
 </body>
 </html>

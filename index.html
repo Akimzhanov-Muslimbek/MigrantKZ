@@ -613,7 +613,7 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <button class="theme-toggle" onclick="toggleTheme()" title="Тёмная тема">
+                        <button class="theme-toggle" onclick="toggleTheme()" title="Тёмная тема" data-key="theme_toggle_title">
                             <i class="bi bi-moon-fill" id="themeIcon"></i>
                         </button>
                     </li>
@@ -743,7 +743,7 @@
                             <h4 style="margin-bottom: 20px;" data-key="filters_title">Фильтры</h4>
                             <div class="mb-3">
                                 <label class="form-label" data-key="filter_city">Город</label>
-                                <select class="form-control">
+                                <select class="form-control" id="homeFilterCity">
                                     <option data-key="option_all">Все города</option>
                                     <option>Алматы</option>
                                     <option>Астана</option>
@@ -752,7 +752,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" data-key="filter_category">Сфера</label>
-                                <select class="form-control">
+                                <select class="form-control" id="homeFilterCategory">
                                     <option data-key="option_all">Все сферы</option>
                                     <option>Строительство</option>
                                     <option>Транспорт</option>
@@ -777,7 +777,7 @@
                 <div class="company-result" id="companyResult" style="display: none;">
                     <div class="company-header">
                         <h3 class="company-name" id="resultCompanyName">ТОО "КазТрансЛогистик"</h3>
-                        <span class="company-status status-verified" id="resultCompanyStatus">Проверено</span>
+                        <span class="company-status status-verified" id="resultCompanyStatus" data-key="status_verified">Проверено</span>
                     </div>
                     <div class="company-rating">
                         <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
@@ -1055,15 +1055,15 @@
                         <div class="dashboard-card">
                             <div class="form-group">
                                 <label data-key="label_name">Имя</label>
-                                <input type="text" id="resumeName" placeholder="Ваше имя">
+                                <input type="text" id="resumeName" placeholder="Ваше имя" data-key="placeholder_name">
                             </div>
                             <div class="form-group">
                                 <label data-key="label_profession">Профессия</label>
-                                <input type="text" id="resumeProfession" placeholder="Например: Водитель">
+                                <input type="text" id="resumeProfession" placeholder="Например: Водитель" data-key="placeholder_profession">
                             </div>
                             <div class="form-group">
                                 <label data-key="label_experience">Опыт работы</label>
-                                <textarea class="form-control-custom" placeholder="Опишите ваш опыт работы"></textarea>
+                                <textarea class="form-control-custom" placeholder="Опишите ваш опыт работы" data-key="placeholder_experience"></textarea>
                             </div>
                             <button class="btn btn-primary-custom" onclick="saveResume()" data-key="btn_save_resume">Сохранить резюме</button>
                         </div>
@@ -1094,7 +1094,7 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="footer-brand">MigrantKZ</div>
-                    <p class="footer-text">Единая платформа для безопасного поиска работы мигрантами в Казахстане.</p>
+                    <p class="footer-text" data-key="footer_text">Единая платформа для безопасного поиска работы мигрантами в Казахстане.</p>
                     <div class="social-links">
                         <a href="#"><i class="bi bi-facebook"></i></a>
                         <a href="#"><i class="bi bi-instagram"></i></a>
@@ -1114,14 +1114,14 @@
                 <div class="col-lg-4">
                     <h5 class="footer-title" data-key="footer_contacts">Контакты</h5>
                     <ul class="footer-links">
-                        <li><i class="bi bi-geo-alt"></i> г. Алматы, ул. Достык, 123</li>
+                        <li><i class="bi bi-geo-alt"></i> <span data-key="footer_address">г. Алматы, ул. Достык, 123</span></li>
                         <li><i class="bi bi-phone"></i> +7 777 123 4567</li>
                         <li><i class="bi bi-envelope"></i> info@migrantkz.kz</li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2026 MigrantKZ. Все права защищены.</p>
+                <p data-key="footer_copyright">© 2026 MigrantKZ. Все права защищены.</p>
             </div>
         </div>
     </footer>
@@ -1157,7 +1157,7 @@
                 <p class="modal-subtitle" data-key="register_subtitle">Присоединяйтесь к нам</p>
                 <div class="form-group">
                     <label data-key="label_name">Имя</label>
-                    <input type="text" id="registerName" placeholder="Ваше имя">
+                    <input type="text" id="registerName" placeholder="Ваше имя" data-key="placeholder_name">
                 </div>
                 <div class="form-group">
                     <label data-key="label_email">Email</label>
@@ -1182,6 +1182,7 @@
         let isLoggedIn = false;
         let currentUser = null;
         let currentLang = 'ru';
+        const SHARED_DATA_KEY = 'migrantkz_shared_data_v1';
 
         // Translations
         const translations = {
@@ -1196,7 +1197,7 @@
                 feature2_title: 'Большой выбор вакансий', feature2_text: 'Тысячи актуальных вакансий в разных сферах.',
                 feature3_title: 'Поддержка 24/7', feature3_text: 'Наша команда поддержки готова помочь в любое время.',
                 jobs_title: 'Актуальные вакансии', jobs_subtitle: 'Найдите работу своей мечты',
-                filters_title: 'Фильтры', filter_city: 'Город', filter_category: 'Сфера', option_all: 'Все города',
+                filters_title: 'Фильтры', filter_city: 'Город', filter_category: 'Сфера', option_all: 'Все',
                 btn_apply: 'Откликнуться', btn_apply_filters: 'Применить', btn_find: 'Найти',
                 employer_title: 'Проверка работодателя', employer_subtitle: 'Введите название компании, чтобы проверить её надёжность',
                 employer_placeholder: 'Введите название компании...', btn_check: 'Проверить',
@@ -1219,12 +1220,12 @@
                 dashboard_title: 'Личный кабинет', menu_overview: 'Обзор', menu_applications: 'Мои отклики', menu_resume: 'Резюме', menu_settings: 'Настройки', menu_logout: 'Выход',
                 welcome: 'Добро пожаловать,', stat_applications: 'Откликов', stat_invites: 'Приглашений', stat_favorites: 'Избранных',
                 my_applications: 'Мои отклики', status_pending: 'Рассматривается',
-                my_resume: 'Моё резюме', label_name: 'Ном', label_profession: 'Касб', label_experience: 'Таҷрибаи кор', btn_save_resume: 'Резюмеро нигоҳ доштан',
-                settings_title: 'Настройки', label_language: 'Забони интерфейс', btn_save_settings: 'Нигоҳ доштан',
+                my_resume: 'Моё резюме', label_name: 'Имя', label_profession: 'Профессия', label_experience: 'Опыт работы', btn_save_resume: 'Сохранить резюме',
+                settings_title: 'Настройки', label_language: 'Язык интерфейса', btn_save_settings: 'Сохранить',
                 footer_nav: 'Навигация', footer_contacts: 'Контакты',
-                tab_login: 'Вуруд', tab_register: 'Ба қайд гузаштан',
-                login_title: 'Бозгаштан!', login_subtitle: 'Ба ҳисоби худ воред', label_email: 'Email', label_password: 'Парол', btn_login: 'Вуруд',
-                register_title: 'Ҳисоб эҷод кунед', register_subtitle: 'Ба мо ҳамроҳ шавед', btn_register: 'Ба қайд гузаштан'
+                tab_login: 'Вход', tab_register: 'Регистрация',
+                login_title: 'С возвращением!', login_subtitle: 'Войдите в свой аккаунт', label_email: 'Email', label_password: 'Пароль', btn_login: 'Войти',
+                register_title: 'Создать аккаунт', register_subtitle: 'Присоединяйтесь к нам', btn_register: 'Зарегистрироваться'
             },
             uz: {
                 nav_home: 'Bosh sahifa', nav_jobs: 'Vakansiyalar', nav_blog: 'Blog', nav_about: 'Biz haqimizda',
@@ -1236,36 +1237,36 @@
                 feature1_title: 'Ish beruvchilarni tekshirish', feature1_text: 'Sharhlar va reytinglar bilan tekshirilgan kompaniyalar bazasi.',
                 feature2_title: 'Ko\'p vakansiyalar', feature2_text: 'Turli sohalarda minglab dolzarb vakansiyalar.',
                 feature3_title: 'Qo\'llab-quvvatlash 24/7', feature3_text: 'Qo\'llab-quvvatlash jamoasi har vaqt yordamga tayyor.',
-                jobs_title: 'Dolzarb vakansiyalar', jobs_subtitle: 'Кори орзуи худро ёбед',
-                filters_title: 'Filtrlar', filter_city: 'Shahar', filter_category: 'Soha', option_all: 'Barcha shaharlar',
-                btn_apply: 'Ариза фиристодан', btn_apply_filters: 'Истифода', btn_find: 'Ёфтан',
-                employer_title: 'Ish beruvchini tekshirish', employer_subtitle: 'Номи компанияро ворид кунед, то амнияти онро санҷед',
-                employer_placeholder: 'Номи компанияро ворид кунед...', btn_check: 'Санҷидан',
-                reviews_title: 'Ходимлар шарҳҳо',
-                testimonials_title: 'Шарҳҳои корбарон', testimonials_subtitle: 'Ҳикояҳои одамони ки ба воситаи мо кор ёфтанд',
-                faq_title: 'Ko\'p beriladigan savollar', faq_subtitle: 'Ҷавобҳо ба саволҳои маъмул дар бораи кор дар Қазоқистон',
-                faq1_q: 'Чӣ тавр бо MigrantKZ кор ёфтан мумкин аст?', faq1_a: 'Дар сайт ба қайд гузаред, резюме созед ва ба ҷойҳо ариза фиристонед.',
-                faq2_q: 'Чӣ тавр кордиҳандаро санҷидан мумкин аст?', faq2_a: 'Номи компанияро дар бахши "Санҷиши кордиҳанда" ворид кунед.',
-                faq3_q: 'Барои кор дар Қазоқистон кадом ҳуҷҷатҳо лозиманд?', faq3_a: 'Паспорт, варақаи мигратсия, иҷозатномаи кор, бақайдгирии маҳаллӣ.',
-                contact_title: 'Бо мо тамос кунед', contact_subtitle: 'Савол доред? Нависед, мо албатта кӯмак мекунем!',
-                contact_name: 'Номи шумо', contact_email: 'Email', contact_phone: 'Телефон', contact_message: 'Паём', btn_send: 'Фиристодан',
-                all_jobs_title: 'Ҳама ҷойҳо', all_jobs_subtitle: 'Кори мувофиқро ёбед',
-                blog_title: 'Блог', blog_subtitle: 'Полезные статьи о работе в Казахстане',
-                blog1_title: 'Как легально работать в Казахстане', blog1_excerpt: 'Полное руководство по оформлению документов для трудовых мигрантов.',
-                blog2_title: 'Как избежать мошенничества', blog2_excerpt: 'Топ-10 признаков недобросовестного работодателя.',
-                blog3_title: 'Средние зарплаты в 2026', blog3_excerpt: 'Обзор зарплат в разных сферах и регионах Казахстана.',
+                jobs_title: 'Dolzarb vakansiyalar', jobs_subtitle: 'Orzuingizdagi ishni toping',
+                filters_title: 'Filtrlar', filter_city: 'Shahar', filter_category: 'Soha', option_all: 'Barchasi',
+                btn_apply: 'Ariza yuborish', btn_apply_filters: 'Qo\'llash', btn_find: 'Topish',
+                employer_title: 'Ish beruvchini tekshirish', employer_subtitle: 'Ishonchliligini tekshirish uchun kompaniya nomini kiriting',
+                employer_placeholder: 'Kompaniya nomini kiriting...', btn_check: 'Tekshirish',
+                reviews_title: 'Xodimlar sharhlari',
+                testimonials_title: 'Foydalanuvchilar fikrlari', testimonials_subtitle: 'Xizmatimiz orqali ish topgan insonlar hikoyalari',
+                faq_title: 'Ko\'p beriladigan savollar', faq_subtitle: 'Qozog\'istonda ishlash bo\'yicha mashhur savollarga javoblar',
+                faq1_q: 'MigrantKZ orqali qanday ish topsa bo\'ladi?', faq1_a: 'Saytda ro\'yxatdan o\'ting, rezyume yarating va vakansiyalarga ariza yuboring.',
+                faq2_q: 'Ish beruvchini qanday tekshirish mumkin?', faq2_a: '"Ish beruvchini tekshirish" bo\'limida kompaniya nomini kiriting.',
+                faq3_q: 'Qozog\'istonda ishlash uchun qanday hujjatlar kerak?', faq3_a: 'Pasport, migratsiya kartasi, ishlash ruxsatnomasi va yashash joyi bo\'yicha ro\'yxat.',
+                contact_title: 'Biz bilan bog\'laning', contact_subtitle: 'Savollaringiz bormi? Bizga yozing, albatta yordam beramiz!',
+                contact_name: 'Ismingiz', contact_email: 'Email', contact_phone: 'Telefon', contact_message: 'Xabaringiz', btn_send: 'Yuborish',
+                all_jobs_title: 'Barcha vakansiyalar', all_jobs_subtitle: 'Mos ishni toping',
+                blog_title: 'Blog', blog_subtitle: 'Qozog\'istonda ishlash haqida foydali maqolalar',
+                blog1_title: 'Qozog\'istonda qonuniy ishlash yo\'llari', blog1_excerpt: 'Mehnat muhojirlari uchun hujjatlarni rasmiylashtirish bo\'yicha to\'liq qo\'llanma.',
+                blog2_title: 'Firibgarlikdan qanday saqlanish kerak', blog2_excerpt: 'Ishonchsiz ish beruvchining 10 ta asosiy belgisi.',
+                blog3_title: '2026-yildagi o\'rtacha maoshlar', blog3_excerpt: 'Qozog\'istonning turli sohalari va hududlaridagi maoshlar sharhi.',
                 btn_read: 'O\'qish',
-                about_title: 'Дар бораи мо', about_subtitle: 'Мо ба муҳоҷирон кӯмак мекунем корҳои бехатар пайдо кунанд',
-                about_team: 'Даста', about_mission: 'Миссия', about_goal: 'Мақсад',
-                dashboard_title: 'Кабинети шахсӣ', menu_overview: 'Амалиёт', menu_applications: 'Аризаҳои ман', menu_resume: 'Резюме', menu_settings: 'Танзимот', menu_logout: 'Баромад',
-                welcome: 'Хуш омадед,', stat_applications: 'Аризаҳо', stat_invites: "Да'inviteҳо", stat_favorites: 'Дӯстдошта',
-                my_applications: 'Аризаҳои ман', status_pending: 'Ко мешавад',
-                my_resume: 'Резюмеи ман', label_name: 'Ном', label_profession: 'Касб', label_experience: 'Таҷрибаи кор', btn_save_resume: 'Резюмеро нигоҳ доштан',
-                settings_title: 'Танзимот', label_language: 'Забони интерфейс', btn_save_settings: 'Нигоҳ доштан',
-                footer_nav: 'Navigatsiya', footer_contacts: 'Контакты',
+                about_title: 'Biz haqimizda', about_subtitle: 'Biz muhojirlarga xavfsiz ish topishda yordam beramiz',
+                about_team: 'Jamoa', about_mission: 'Missiya', about_goal: 'Maqsad',
+                dashboard_title: 'Shaxsiy kabinet', menu_overview: 'Umumiy', menu_applications: 'Mening arizalarim', menu_resume: 'Rezyume', menu_settings: 'Sozlamalar', menu_logout: 'Chiqish',
+                welcome: 'Xush kelibsiz,', stat_applications: 'Arizalar', stat_invites: 'Taklifnomalar', stat_favorites: 'Saqlanganlar',
+                my_applications: 'Mening arizalarim', status_pending: 'Ko\'rib chiqilmoqda',
+                my_resume: 'Mening rezyumem', label_name: 'Ism', label_profession: 'Kasb', label_experience: 'Ish tajribasi', btn_save_resume: 'Rezyumeni saqlash',
+                settings_title: 'Sozlamalar', label_language: 'Interfeys tili', btn_save_settings: 'Saqlash',
+                footer_nav: 'Navigatsiya', footer_contacts: 'Kontaktlar',
                 tab_login: 'Kirish', tab_register: 'Ro\'yxatdan o\'tish',
                 login_title: 'Qaytib keldingiz!', login_subtitle: 'Akkauntingizga kiring', label_email: 'Email', label_password: 'Parol', btn_login: 'Kirish',
-                register_title: 'Akkaunt yaratish', register_subtitle: 'Ба мо ҳамроҳ шавед', btn_register: 'Ба қайд гузаштан'
+                register_title: 'Akkaunt yaratish', register_subtitle: 'Bizga qo\'shiling', btn_register: 'Ro\'yxatdan o\'tish'
             },
             tg: {
                 nav_home: 'Саҳифаи асосӣ', nav_jobs: 'Ҷойҳои корӣ', nav_blog: 'Блог', nav_about: 'Дар бораи мо',
@@ -1278,7 +1279,7 @@
                 feature2_title: 'Интихоби васеи ҷойҳо', feature2_text: 'Ҳазорҳо ҷойҳои корӣ дар соҳаҳои гуногуни Қазоқистон.',
                 feature3_title: 'Дастгирии 24/7', feature3_text: 'Дастаи дастгирӣ омода аст дар ҳар вақт кӯмак кунад.',
                 jobs_title: 'Ҷойҳои корӣ', jobs_subtitle: 'Кори орзуи худро ёбед',
-                filters_title: 'Филтрҳо', filter_city: 'Шаҳр', filter_category: 'Соҳта', option_all: 'Ҳама шаҳрҳо',
+                filters_title: 'Филтрҳо', filter_city: 'Шаҳр', filter_category: 'Соҳа', option_all: 'Ҳама',
                 btn_apply: 'Ариза фиристодан', btn_apply_filters: 'Истифода', btn_find: 'Ёфтан',
                 employer_title: 'Санҷиши кордиҳанда', employer_subtitle: 'Номи компанияро ворид кунед, то амнияти онро санҷед',
                 employer_placeholder: 'Номи компанияро ворид кунед...', btn_check: 'Санҷидан',
@@ -1298,9 +1299,9 @@
                 btn_read: 'Хондан',
                 about_title: 'Дар бораи мо', about_subtitle: 'Мо ба муҳоҷирон кӯмак мекунем корҳои бехатар пайдо кунанд',
                 about_team: 'Даста', about_mission: 'Миссия', about_goal: 'Мақсад',
-                dashboard_title: 'Кабинети шахсӣ', menu_overview: 'Амалиёт', menu_applications: 'Аризаҳои ман', menu_resume: 'Резюме', menu_settings: 'Танзимот', menu_logout: 'Баромад',
-                welcome: 'Хуш омадед,', stat_applications: 'Аризаҳо', stat_invites: "Да'inviteҳо", stat_favorites: 'Дӯстдошта',
-                my_applications: 'Аризаҳои ман', status_pending: 'Ко мешавад',
+                dashboard_title: 'Кабинети шахсӣ', menu_overview: 'Шарҳ', menu_applications: 'Аризаҳои ман', menu_resume: 'Резюме', menu_settings: 'Танзимот', menu_logout: 'Баромад',
+                welcome: 'Хуш омадед,', stat_applications: 'Аризаҳо', stat_invites: 'Даъватномаҳо', stat_favorites: 'Дӯстдошта',
+                my_applications: 'Аризаҳои ман', status_pending: 'Дар баррасӣ',
                 my_resume: 'Резюмеи ман', label_name: 'Ном', label_profession: 'Касб', label_experience: 'Таҷрибаи кор', btn_save_resume: 'Резюмеро нигоҳ доштан',
                 settings_title: 'Танзимот', label_language: 'Забони интерфейс', btn_save_settings: 'Нигоҳ доштан',
                 footer_nav: 'Навигатсия', footer_contacts: 'Тамосҳо',
@@ -1319,7 +1320,7 @@
                 feature2_title: 'Large Job Selection', feature2_text: 'Thousands of relevant vacancies in various fields.',
                 feature3_title: 'Support 24/7', feature3_text: 'Our support team is ready to help at any time.',
                 jobs_title: 'Current Vacancies', jobs_subtitle: 'Find your dream job',
-                filters_title: 'Filters', filter_city: 'City', filter_category: 'Category', option_all: 'All cities',
+                filters_title: 'Filters', filter_city: 'City', filter_category: 'Category', option_all: 'All',
                 btn_apply: 'Apply', btn_apply_filters: 'Apply', btn_find: 'Find',
                 employer_title: 'Employer Verification', employer_subtitle: 'Enter company name to verify its reliability',
                 employer_placeholder: 'Enter company name...', btn_check: 'Check',
@@ -1351,12 +1352,398 @@
             }
         };
 
+        Object.assign(translations.ru, {
+            footer_text: 'Единая платформа для безопасного поиска работы мигрантами в Казахстане.',
+            footer_copyright: '© 2026 MigrantKZ. Все права защищены.',
+            footer_address: 'г. Алматы, ул. Достык, 123',
+            status_verified: 'Проверено',
+            theme_toggle_title: 'Тёмная тема',
+            placeholder_name: 'Ваше имя',
+            placeholder_profession: 'Например: Водитель',
+            placeholder_experience: 'Опишите ваш опыт работы',
+            alert_fill_fields: 'Пожалуйста, заполните все поля',
+            alert_fill_required: 'Пожалуйста, заполните все обязательные поля',
+            alert_resume_saved: 'Резюме сохранено!',
+            alert_settings_saved: 'Настройки сохранены!',
+            alert_apply_sent_prefix: 'Ваш отклик на вакансию "',
+            alert_apply_sent_suffix: '" отправлен!',
+            alert_filter_soon: 'Фильтрация вакансий скоро будет доступна!',
+            alert_contact_sent: 'Спасибо! Ваше сообщение отправлено.'
+        });
+
+        Object.assign(translations.uz, {
+            footer_text: 'Qozog\'istonda muhojirlar uchun xavfsiz ish topish bo\'yicha yagona platforma.',
+            footer_copyright: '© 2026 MigrantKZ. Barcha huquqlar himoyalangan.',
+            footer_address: 'Olmaota shahri, Dostiq ko\'chasi, 123',
+            status_verified: 'Tasdiqlangan',
+            theme_toggle_title: 'Qorong\'u mavzu',
+            placeholder_name: 'Ismingiz',
+            placeholder_profession: 'Masalan: Haydovchi',
+            placeholder_experience: 'Ish tajribangizni tasvirlang',
+            alert_fill_fields: 'Iltimos, barcha maydonlarni to\'ldiring',
+            alert_fill_required: 'Iltimos, barcha majburiy maydonlarni to\'ldiring',
+            alert_resume_saved: 'Rezyume saqlandi!',
+            alert_settings_saved: 'Sozlamalar saqlandi!',
+            alert_apply_sent_prefix: '"',
+            alert_apply_sent_suffix: '" vakansiyasiga arizangiz yuborildi!',
+            alert_filter_soon: 'Vakansiyalarni filtrlash tez orada mavjud bo\'ladi!',
+            alert_contact_sent: 'Rahmat! Xabaringiz yuborildi.'
+        });
+
+        Object.assign(translations.tg, {
+            footer_text: 'Платформаи ягона барои ҷустуҷӯи бехатари кор барои муҳоҷирон дар Қазоқистон.',
+            footer_copyright: '© 2026 MigrantKZ. Ҳамаи ҳуқуқҳо ҳифз шудаанд.',
+            footer_address: 'ш. Алмаато, кӯч. Дӯстиқ, 123',
+            status_verified: 'Санҷидашуда',
+            theme_toggle_title: 'Мавзӯи торик',
+            placeholder_name: 'Номи шумо',
+            placeholder_profession: 'Масалан: Ронанда',
+            placeholder_experience: 'Таҷрибаи кори худро тавсиф кунед',
+            alert_fill_fields: 'Лутфан, ҳамаи майдонҳоро пур кунед',
+            alert_fill_required: 'Лутфан, ҳамаи майдонҳои ҳатмиро пур кунед',
+            alert_resume_saved: 'Резюме нигоҳ дошта шуд!',
+            alert_settings_saved: 'Танзимот нигоҳ дошта шуд!',
+            alert_apply_sent_prefix: 'Аризаи шумо ба ҷойи кори "',
+            alert_apply_sent_suffix: '" фиристода шуд!',
+            alert_filter_soon: 'Филтркунии ҷойҳои корӣ ба зудӣ дастрас мешавад!',
+            alert_contact_sent: 'Ташаккур! Паёми шумо фиристода шуд.'
+        });
+
+        Object.assign(translations.en, {
+            footer_text: 'A unified platform for safe job search for migrants in Kazakhstan.',
+            footer_copyright: '© 2026 MigrantKZ. All rights reserved.',
+            footer_address: 'Almaty, Dostyk street, 123',
+            status_verified: 'Verified',
+            theme_toggle_title: 'Dark theme',
+            placeholder_name: 'Your name',
+            placeholder_profession: 'Example: Driver',
+            placeholder_experience: 'Describe your work experience',
+            alert_fill_fields: 'Please fill in all fields',
+            alert_fill_required: 'Please fill in all required fields',
+            alert_resume_saved: 'Resume saved!',
+            alert_settings_saved: 'Settings saved!',
+            alert_apply_sent_prefix: 'Your application for "',
+            alert_apply_sent_suffix: '" has been sent!',
+            alert_filter_soon: 'Job filtering will be available soon!',
+            alert_contact_sent: 'Thank you! Your message has been sent.'
+        });
+
+        const localizedContent = {
+            ru: {
+                page_title: 'MigrantKZ - Работай безопасно в Казахстане',
+                blog_dates: ['24 апреля 2026', '20 апреля 2026', '15 апреля 2026'],
+                jobs: [
+                    { title: 'Водитель-международник', company: 'ТОО "КазТрансЛогистик"', tags: ['Транспорт', 'Опыт от 3 лет', 'С проживанием'], location: 'Алматы' },
+                    { title: 'Сварщик', company: 'ТОО "КазСтройМонтаж"', tags: ['Строительство', 'Сертификат'], location: 'Астана' },
+                    { title: 'Повар', company: 'Ресторан "Шахрияр"', tags: ['Общепит', 'Опыт от 1 года'], location: 'Шымкент' },
+                    { title: 'Водитель-международник', company: 'ТОО "КазТрансЛогистик"', tags: ['Транспорт', 'Опыт от 3 лет'], location: 'Алматы' },
+                    { title: 'Сварщик', company: 'ТОО "КазСтройМонтаж"', tags: [], location: 'Астана' }
+                ],
+                city_options: ['Алматы', 'Астана', 'Шымкент'],
+                category_options: ['Строительство', 'Транспорт', 'Общепит'],
+                employer_review_author: 'Александр И.',
+                employer_review_text: 'Отличная компания! Работаю уже 2 года, всегда вовремя платят.',
+                testimonials: [
+                    { text: '"Благодаря MigrantKZ нашёл работу водителем за неделю. Проверил компанию - всё чисто!"', name: 'Алексей', role: 'Водитель, Алматы' },
+                    { text: '"Очень помогла проверка работодателя. Узнал, что компания не выплачивала зарплату вовремя."', name: 'Михаил', role: 'Строитель, Астана' },
+                    { text: '"Отличный сайт! Всё понятно, много вакансий. Нашёл работу поваром!"', name: 'Сергей', role: 'Повар, Шымкент' }
+                ],
+                about_texts: [
+                    'Мы - команда профессионалов с многолетним опытом в сфере трудоустройства.',
+                    'Помогать мигрантам находить честную работу и защищать их права.',
+                    'Создать прозрачный рынок труда, где каждый может найти достойную работу.'
+                ],
+                settings_lang_options: ['Русский', 'Узбекский', 'Таджикский', 'Английский']
+            },
+            uz: {
+                page_title: 'MigrantKZ - Qozog\'istonda xavfsiz ishlang',
+                blog_dates: ['24-aprel 2026', '20-aprel 2026', '15-aprel 2026'],
+                jobs: [
+                    { title: 'Xalqaro haydovchi', company: '"KazTransLogistik" MChJ', tags: ['Transport', '3 yildan tajriba', 'Yotoqxona bilan'], location: 'Olmaota' },
+                    { title: 'Payvandchi', company: '"KazStroyMontaj" MChJ', tags: ['Qurilish', 'Sertifikat'], location: 'Astana' },
+                    { title: 'Oshpaz', company: '"Shahriyor" restorani', tags: ['Umumiy ovqatlanish', '1 yildan tajriba'], location: 'Shimkent' },
+                    { title: 'Xalqaro haydovchi', company: '"KazTransLogistik" MChJ', tags: ['Transport', '3 yildan tajriba'], location: 'Olmaota' },
+                    { title: 'Payvandchi', company: '"KazStroyMontaj" MChJ', tags: [], location: 'Astana' }
+                ],
+                city_options: ['Olmaota', 'Astana', 'Shimkent'],
+                category_options: ['Qurilish', 'Transport', 'Umumiy ovqatlanish'],
+                employer_review_author: 'Aleksandr I.',
+                employer_review_text: 'Ajoyib kompaniya! 2 yildan beri ishlayman, to\'lovlar har doim vaqtida.',
+                testimonials: [
+                    { text: '"MigrantKZ orqali bir haftada haydovchi bo\'lib ish topdim. Kompaniyani tekshirdim — hammasi toza!"', name: 'Aleksey', role: 'Haydovchi, Olmaota' },
+                    { text: '"Ish beruvchini tekshirish juda yordam berdi. Kompaniya oylikni vaqtida bermaganini bildim."', name: 'Mixail', role: 'Quruvchi, Astana' },
+                    { text: '"Ajoyib sayt! Hammasi tushunarli, vakansiyalar ko\'p. Oshpaz bo\'lib ish topdim!"', name: 'Sergey', role: 'Oshpaz, Shimkent' }
+                ],
+                about_texts: [
+                    'Biz mehnat bozorida ko\'p yillik tajribaga ega mutaxassislar jamoasimiz.',
+                    'Muhojirlarga halol ish topishda va ularning huquqlarini himoya qilishda yordam berish.',
+                    'Har bir inson munosib ish topa oladigan shaffof mehnat bozorini yaratish.'
+                ],
+                settings_lang_options: ['Rus tili', 'O\'zbek tili', 'Tojik tili', 'Ingliz tili']
+            },
+            tg: {
+                page_title: 'MigrantKZ - Дар Қазоқистон бехатар кор кунед',
+                blog_dates: ['24 апрели 2026', '20 апрели 2026', '15 апрели 2026'],
+                jobs: [
+                    { title: 'Ронандаи байналмилалӣ', company: 'ҶДММ "КазТрансЛогистик"', tags: ['Нақлиёт', 'Тажриба аз 3 сол', 'Бо ҷойи зист'], location: 'Алмаато' },
+                    { title: 'Кафшергар', company: 'ҶДММ "КазСтройМонтаж"', tags: ['Сохтмон', 'Шаҳодатнома'], location: 'Остона' },
+                    { title: 'Ошпаз', company: 'Тарабхонаи "Шаҳриёр"', tags: ['Хӯроки умумӣ', 'Тажриба аз 1 сол'], location: 'Шимкент' },
+                    { title: 'Ронандаи байналмилалӣ', company: 'ҶДММ "КазТрансЛогистик"', tags: ['Нақлиёт', 'Тажриба аз 3 сол'], location: 'Алмаато' },
+                    { title: 'Кафшергар', company: 'ҶДММ "КазСтройМонтаж"', tags: [], location: 'Остона' }
+                ],
+                city_options: ['Алмаато', 'Остона', 'Шимкент'],
+                category_options: ['Сохтмон', 'Нақлиёт', 'Хӯроки умумӣ'],
+                employer_review_author: 'Александр И.',
+                employer_review_text: 'Компанияи олӣ! Ман 2 сол боз кор мекунам, ҳамеша сари вақт маош медиҳанд.',
+                testimonials: [
+                    { text: '"Бо MigrantKZ дар як ҳафта кори ронанда ёфтам. Компанияро санҷидам — ҳамааш тоза буд!"', name: 'Алексей', role: 'Ронанда, Алмаато' },
+                    { text: '"Санҷиши кордиҳанда хеле кӯмак кард. Фаҳмидам, ки компания маошро сари вақт намедод."', name: 'Михаил', role: 'Сохтмончӣ, Остона' },
+                    { text: '"Сайти аъло! Ҳама чиз фаҳмо, ҷойҳои корӣ бисёр. Кори ошпаз ёфтам!"', name: 'Сергей', role: 'Ошпаз, Шимкент' }
+                ],
+                about_texts: [
+                    'Мо дастаи мутахассисонем, ки дар соҳаи шуғл таҷрибаи бисёрсола дорем.',
+                    'Кӯмак ба муҳоҷирон барои ёфтани кори ростқавлона ва ҳифзи ҳуқуқҳои онҳо.',
+                    'Сохтани бозори меҳнати шаффоф, ки ҳар кас кори арзандаро ёбад.'
+                ],
+                settings_lang_options: ['Русӣ', 'Ӯзбекӣ', 'Тоҷикӣ', 'Англисӣ']
+            },
+            en: {
+                page_title: 'MigrantKZ - Work Safely in Kazakhstan',
+                blog_dates: ['April 24, 2026', 'April 20, 2026', 'April 15, 2026'],
+                jobs: [
+                    { title: 'International Driver', company: 'KazTransLogistik LLP', tags: ['Transport', '3+ years experience', 'With accommodation'], location: 'Almaty' },
+                    { title: 'Welder', company: 'KazStroyMontazh LLP', tags: ['Construction', 'Certificate required'], location: 'Astana' },
+                    { title: 'Cook', company: 'Shahriyar Restaurant', tags: ['Catering', '1+ year experience'], location: 'Shymkent' },
+                    { title: 'International Driver', company: 'KazTransLogistik LLP', tags: ['Transport', '3+ years experience'], location: 'Almaty' },
+                    { title: 'Welder', company: 'KazStroyMontazh LLP', tags: [], location: 'Astana' }
+                ],
+                city_options: ['Almaty', 'Astana', 'Shymkent'],
+                category_options: ['Construction', 'Transport', 'Catering'],
+                employer_review_author: 'Alexander I.',
+                employer_review_text: 'Excellent company! I have worked here for 2 years, and salary is always on time.',
+                testimonials: [
+                    { text: '"Thanks to MigrantKZ, I found a driving job in a week. I checked the company - everything is clean!"', name: 'Alexey', role: 'Driver, Almaty' },
+                    { text: '"Employer verification helped a lot. I found out the company did not pay salaries on time."', name: 'Mikhail', role: 'Builder, Astana' },
+                    { text: '"Great site! Everything is clear, many vacancies. I found a job as a cook!"', name: 'Sergey', role: 'Cook, Shymkent' }
+                ],
+                about_texts: [
+                    'We are a team of professionals with many years of experience in employment.',
+                    'Help migrants find honest work and protect their rights.',
+                    'Build a transparent labor market where everyone can find decent work.'
+                ],
+                settings_lang_options: ['Russian', 'Uzbek', 'Tajik', 'English']
+            }
+        };
+
+        function getSharedData() {
+            const raw = localStorage.getItem(SHARED_DATA_KEY);
+            if (!raw) return null;
+            try {
+                const parsed = JSON.parse(raw);
+                return {
+                    jobs: Array.isArray(parsed.jobs) ? parsed.jobs : [],
+                    employers: Array.isArray(parsed.employers) ? parsed.employers : [],
+                    reviews: Array.isArray(parsed.reviews) ? parsed.reviews : []
+                };
+            } catch (error) {
+                return null;
+            }
+        }
+
+        function renderJobCard(card, job) {
+            if (!card || !job) return;
+            const titleEl = card.querySelector('.job-title');
+            const companyEl = card.querySelector('.job-company');
+            const salaryEl = card.querySelector('.job-salary');
+            const locationEl = card.querySelector('.job-location');
+            const footerEl = card.querySelector('.job-footer');
+            let tagsWrap = card.querySelector('.job-tags');
+            if (!tagsWrap && footerEl) {
+                tagsWrap = document.createElement('div');
+                tagsWrap.className = 'job-tags';
+                card.insertBefore(tagsWrap, footerEl);
+            }
+
+            if (titleEl) titleEl.textContent = job.title || '';
+            if (companyEl) companyEl.textContent = job.company || '';
+            if (salaryEl) salaryEl.textContent = job.salary || '';
+            if (locationEl) locationEl.innerHTML = '<i class="bi bi-geo-alt"></i> ' + (job.location || '');
+
+            if (tagsWrap) {
+                tagsWrap.innerHTML = '';
+                (job.tags || []).forEach((tag) => {
+                    const span = document.createElement('span');
+                    span.className = 'job-tag';
+                    span.textContent = tag;
+                    tagsWrap.appendChild(span);
+                });
+            }
+
+            const btn = card.querySelector('.btn.btn-primary-custom');
+            if (btn) {
+                btn.dataset.jobTitle = job.title || '';
+                btn.setAttribute('onclick', 'applyJobFromButton(this)');
+            }
+        }
+
+        function applySharedDataOverrides() {
+            const shared = getSharedData();
+            if (!shared) return;
+
+            if (shared.jobs.length) {
+                const homeCards = document.querySelectorAll('#home-page #jobs .job-card');
+                const allJobsCards = document.querySelectorAll('#jobs-page .job-card');
+
+                homeCards.forEach((card, idx) => {
+                    if (shared.jobs[idx]) {
+                        renderJobCard(card, shared.jobs[idx]);
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                const jobsContainer = document.querySelector('#jobs-page .col-lg-9');
+                allJobsCards.forEach((card, idx) => {
+                    if (shared.jobs[idx]) {
+                        renderJobCard(card, shared.jobs[idx]);
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                if (jobsContainer && shared.jobs.length > allJobsCards.length && allJobsCards[0]) {
+                    for (let i = allJobsCards.length; i < shared.jobs.length; i++) {
+                        const clone = allJobsCards[0].cloneNode(true);
+                        renderJobCard(clone, shared.jobs[i]);
+                        jobsContainer.appendChild(clone);
+                    }
+                }
+            }
+
+            if (shared.employers.length) {
+                const employer = shared.employers[0];
+                const nameEl = document.getElementById('resultCompanyName');
+                const statusEl = document.getElementById('resultCompanyStatus');
+                if (nameEl) nameEl.textContent = employer.name || '';
+                if (statusEl) {
+                    const statusMap = {
+                        verified: t('status_verified', 'Проверено'),
+                        pending: currentLang === 'en' ? 'Pending' : (currentLang === 'uz' ? 'Tekshiruvda' : (currentLang === 'tg' ? 'Дар санҷиш' : 'На проверке')),
+                        risky: currentLang === 'en' ? 'Risk' : (currentLang === 'uz' ? 'Xavf' : (currentLang === 'tg' ? 'Хатар' : 'Риск'))
+                    };
+                    statusEl.textContent = statusMap[employer.status] || statusMap.verified;
+                    statusEl.classList.remove('status-verified', 'status-risky');
+                    if (employer.status === 'risky') statusEl.classList.add('status-risky');
+                    else statusEl.classList.add('status-verified');
+                }
+            }
+
+            if (shared.reviews.length) {
+                const review = shared.reviews[0];
+                const reviewAuthor = document.querySelector('#companyResult .review-author');
+                const reviewText = document.querySelector('#companyResult .review-text');
+                const reviewDate = document.querySelector('#companyResult .review-date');
+                if (reviewAuthor) reviewAuthor.textContent = review.author || '';
+                if (reviewText) reviewText.textContent = review.text || '';
+                if (reviewDate) reviewDate.textContent = review.date || '';
+            }
+        }
+
+        function applyLocalizedData(lang) {
+            const data = localizedContent[lang] || localizedContent.ru;
+            document.title = data.page_title;
+
+            const jobCards = document.querySelectorAll('.job-card');
+            data.jobs.forEach((job, index) => {
+                const card = jobCards[index];
+                if (!card) return;
+                const titleEl = card.querySelector('.job-title');
+                const companyEl = card.querySelector('.job-company');
+                const locationEl = card.querySelector('.job-location');
+                const tagsEls = card.querySelectorAll('.job-tag');
+                if (titleEl) titleEl.textContent = job.title;
+                if (companyEl) companyEl.textContent = job.company;
+                if (locationEl) locationEl.innerHTML = '<i class="bi bi-geo-alt"></i> ' + job.location;
+                tagsEls.forEach((tagEl, tagIndex) => {
+                    if (job.tags[tagIndex]) {
+                        tagEl.textContent = job.tags[tagIndex];
+                    }
+                });
+            });
+
+            document.querySelectorAll('.review-author').forEach((el) => { el.textContent = data.employer_review_author; });
+            document.querySelectorAll('.review-text').forEach((el) => { el.textContent = data.employer_review_text; });
+
+            const testimonialCards = document.querySelectorAll('.testimonial-card');
+            data.testimonials.forEach((item, index) => {
+                const card = testimonialCards[index];
+                if (!card) return;
+                const textEl = card.querySelector('.testimonial-text');
+                const nameEl = card.querySelector('.testimonial-info h5');
+                const roleEl = card.querySelector('.testimonial-info p');
+                if (textEl) textEl.textContent = item.text;
+                if (nameEl) nameEl.textContent = item.name;
+                if (roleEl) roleEl.textContent = item.role;
+            });
+
+            const aboutCards = document.querySelectorAll('.about-card');
+            data.about_texts.forEach((text, index) => {
+                const card = aboutCards[index];
+                if (!card) return;
+                const p = card.querySelector('p');
+                if (p) p.textContent = text;
+            });
+
+            const blogDates = document.querySelectorAll('.blog-date');
+            data.blog_dates.forEach((date, index) => {
+                if (blogDates[index]) blogDates[index].textContent = date;
+            });
+
+            const dashboardCard = document.querySelector('#dashboard-applications .job-card');
+            if (dashboardCard) {
+                const titleEl = dashboardCard.querySelector('.job-title');
+                const companyEl = dashboardCard.querySelector('.job-company');
+                if (titleEl) titleEl.textContent = data.jobs[0].title;
+                if (companyEl) companyEl.textContent = data.jobs[0].company;
+            }
+
+            const citySelects = [document.getElementById('homeFilterCity'), document.getElementById('filterCity')].filter(Boolean);
+            citySelects.forEach((select) => {
+                const options = select.querySelectorAll('option');
+                data.city_options.forEach((city, i) => {
+                    if (options[i + 1]) options[i + 1].textContent = city;
+                });
+            });
+
+            const categorySelects = [document.getElementById('homeFilterCategory'), document.getElementById('filterCategory')].filter(Boolean);
+            categorySelects.forEach((select) => {
+                const options = select.querySelectorAll('option');
+                data.category_options.forEach((category, i) => {
+                    if (options[i + 1]) options[i + 1].textContent = category;
+                });
+            });
+
+            const settingsLanguage = document.getElementById('settingsLanguage');
+            if (settingsLanguage) {
+                const options = settingsLanguage.querySelectorAll('option');
+                data.settings_lang_options.forEach((name, idx) => {
+                    if (options[idx]) options[idx].textContent = name;
+                });
+            }
+        }
+
         function translatePage(lang) {
             const t = translations[lang] || translations['ru'];
+            document.documentElement.setAttribute('lang', lang);
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.getAttribute('data-key');
                 if (t[key]) {
-                    el.textContent = t[key];
+                    if (el.hasAttribute('title')) {
+                        el.title = t[key];
+                    } else {
+                        el.textContent = t[key];
+                    }
                 }
             });
             document.querySelectorAll('[data-key][placeholder]').forEach(el => {
@@ -1365,12 +1752,15 @@
                     el.placeholder = t[key];
                 }
             });
+            applyLocalizedData(lang);
+            applySharedDataOverrides();
         }
 
         function setLanguage(lang) {
             currentLang = lang;
             localStorage.setItem('language', lang);
             translatePage(lang);
+            updateAuthButton();
             document.getElementById('langDropdown').classList.remove('show');
         }
 
@@ -1408,6 +1798,7 @@
                 currentLang = savedLang;
                 translatePage(savedLang);
             }
+            updateAuthButton();
 
             const savedUser = localStorage.getItem('user');
             if (savedUser) {
@@ -1458,6 +1849,10 @@
             else { document.querySelector('.tab:last-child').classList.add('active'); document.getElementById('register-form').classList.add('active'); }
         }
 
+        function t(key, fallback = '') {
+            return translations[currentLang]?.[key] || fallback;
+        }
+
         function login() {
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
@@ -1470,7 +1865,7 @@
                 showPage('dashboard');
                 const userNameEl = document.getElementById('userName');
                 if (userNameEl) userNameEl.textContent = translations[currentLang]?.welcome?.replace(',', '') || 'Добро пожаловать';
-            } else { alert('Пожалуйста, заполните все поля'); }
+            } else { alert(t('alert_fill_fields', 'Пожалуйста, заполните все поля')); }
         }
 
         function register() {
@@ -1486,7 +1881,7 @@
                 showPage('dashboard');
                 const userNameEl = document.getElementById('userName');
                 if (userNameEl) userNameEl.textContent = (translations[currentLang]?.welcome?.replace(',', '') || 'Добро пожаловать') + ' ' + name + '!';
-            } else { alert('Пожалуйста, заполните все обязательные поля'); }
+            } else { alert(t('alert_fill_required', 'Пожалуйста, заполните все обязательные поля')); }
         }
 
         function logout() {
@@ -1518,12 +1913,19 @@
             document.getElementById('dashboard-' + tab).style.display = 'block';
         }
 
-        function saveResume() { alert(translations[currentLang]?.btn_save_resume || 'Резюме сохранено!'); }
-        function saveSettings() { alert(translations[currentLang]?.btn_save_settings || 'Настройки сохранены!'); }
-        function applyJob(jobTitle) { if (!isLoggedIn) { showModal('login'); return; } alert('Ваш отклик на вакансию "' + jobTitle + '" отправлен!'); }
+        function saveResume() { alert(t('alert_resume_saved', 'Резюме сохранено!')); }
+        function saveSettings() { alert(t('alert_settings_saved', 'Настройки сохранены!')); }
+        function applyJob(jobTitle) {
+            if (!isLoggedIn) { showModal('login'); return; }
+            const button = (typeof event !== 'undefined' && event && event.target) ? event.target.closest('button') : null;
+            const card = button ? button.closest('.job-card') : null;
+            const localizedTitle = card?.querySelector('.job-title')?.textContent || jobTitle;
+            alert(t('alert_apply_sent_prefix', 'Ваш отклик на вакансию "') + localizedTitle + t('alert_apply_sent_suffix', '" отправлен!'));
+        }
+        function applyJobFromButton(button) { applyJob(button?.dataset?.jobTitle || ''); }
         function searchCompany() { const input = document.getElementById('companySearchInput').value; const result = document.getElementById('companyResult'); if (input.trim() !== '') { document.getElementById('resultCompanyName').textContent = 'ТОО "' + input + '"'; result.style.display = 'block'; result.scrollIntoView({ behavior: 'smooth' }); } }
-        function filterJobs() { alert('Фильтрация вакансий скоро будет доступна!'); }
-        function submitContact() { const name = document.getElementById('contactName').value; const email = document.getElementById('contactEmail').value; const message = document.getElementById('contactMessage').value; if (name && email && message) { alert('Спасибо! Ваше сообщение отправлено.'); } else { alert('Пожалуйста, заполните все поля'); } }
+        function filterJobs() { alert(t('alert_filter_soon', 'Фильтрация вакансий скоро будет доступна!')); }
+        function submitContact() { const name = document.getElementById('contactName').value; const email = document.getElementById('contactEmail').value; const message = document.getElementById('contactMessage').value; if (name && email && message) { alert(t('alert_contact_sent', 'Спасибо! Ваше сообщение отправлено.')); } else { alert(t('alert_fill_fields', 'Пожалуйста, заполните все поля')); } }
 
         window.addEventListener('scroll', function() {
             const navbar = document.getElementById('navbar');
