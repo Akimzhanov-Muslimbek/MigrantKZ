@@ -1492,8 +1492,11 @@
             const accordion = document.getElementById('faqAccordion');
             if (!accordion) return;
 
-            // If no shared data at all, keep default HTML content
-            if (!shared) return;
+            // If no shared data at all, restore default content
+            if (!shared) {
+                restoreDefaultFaq();
+                return;
+            }
 
             // If shared data exists but FAQ is empty, restore default content
             if (!shared.faq || shared.faq.length === 0) {
@@ -1553,6 +1556,10 @@
 
         function applySharedDataOverrides() {
             const shared = getSharedData();
+
+            // Render FAQ first (will use shared data if available, or restore defaults)
+            renderFaqFromSharedData();
+
             if (!shared) return;
 
             if (shared.jobs.length) {
@@ -1625,8 +1632,6 @@
                 if (reviewText) reviewText.textContent = review.text || '';
                 if (reviewDate) reviewDate.textContent = review.date || '';
             }
-
-            renderFaqFromSharedData();
         }
 
         function getCurrentJobsForUI() {
