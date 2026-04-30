@@ -1489,9 +1489,19 @@
 
         function renderFaqFromSharedData() {
             const shared = getSharedData();
-            if (!shared || !shared.faq || shared.faq.length === 0) return;
             const accordion = document.getElementById('faqAccordion');
             if (!accordion) return;
+
+            // If no shared data at all, keep default HTML content
+            if (!shared) return;
+
+            // If shared data exists but FAQ is empty, restore default content
+            if (!shared.faq || shared.faq.length === 0) {
+                restoreDefaultFaq();
+                return;
+            }
+
+            // Clear and rebuild from shared data
             accordion.innerHTML = '';
             shared.faq.forEach((item, index) => {
                 const accordionItem = document.createElement('div');
@@ -1508,6 +1518,37 @@
                 `;
                 accordion.appendChild(accordionItem);
             });
+        }
+
+        function restoreDefaultFaq() {
+            const accordion = document.getElementById('faqAccordion');
+            if (!accordion) return;
+            accordion.innerHTML = `
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" data-key="faq1_q">Как найти работу через MigrantKZ?</button>
+                    </h2>
+                    <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body" data-key="faq1_a">Просто зарегистрируйтесь на сайте, создайте резюме и начните откликаться на вакансии.</div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" data-key="faq2_q">Как проверить работодателя?</button>
+                    </h2>
+                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body" data-key="faq2_a">Введите название компании в разделе "Проверка работодателя".</div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" data-key="faq3_q">Какие документы нужны для работы в Казахстане?</button>
+                    </h2>
+                    <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body" data-key="faq3_a">Паспорт, миграционная карта, разрешение на работу, регистрация по месту жительства.</div>
+                    </div>
+                </div>
+            `;
         }
 
         function applySharedDataOverrides() {
@@ -1584,6 +1625,8 @@
                 if (reviewText) reviewText.textContent = review.text || '';
                 if (reviewDate) reviewDate.textContent = review.date || '';
             }
+
+            renderFaqFromSharedData();
         }
 
         function getCurrentJobsForUI() {
@@ -1761,6 +1804,7 @@
                 currentLang = savedLang;
                 translatePage(savedLang);
             }
+            applySharedDataOverrides();
             updateAuthButton();
 
             const savedUser = localStorage.getItem('user');
