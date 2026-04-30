@@ -609,7 +609,6 @@
                             <button onclick="setLanguage('ru')">🇷🇺 Русский</button>
                             <button onclick="setLanguage('uz')">🇺🇿 O'zbekcha</button>
                             <button onclick="setLanguage('tg')">🇹🇯 Тоҷикӣ</button>
-                            <button onclick="setLanguage('en')">🇬🇧 English</button>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -759,7 +758,7 @@
                                     <option>Общепит</option>
                                 </select>
                             </div>
-                            <button class="btn btn-primary-custom w-100" data-key="btn_apply_filters">Применить</button>
+                            <button class="btn btn-primary-custom w-100" data-key="btn_apply_filters" onclick="applyHomeFilters()">Применить</button>
                         </div>
                     </div>
                 </div>
@@ -781,14 +780,14 @@
                     </div>
                     <div class="company-rating">
                         <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
-                        <span style="color: white; margin-left: 10px;">4.5</span>
+                        <span style="color: white; margin-left: 10px;" id="resultCompanyRating">4.5</span>
                     </div>
                     <div class="company-reviews">
                         <h4 data-key="reviews_title">Отзывы сотрудников</h4>
                         <div class="review-item">
-                            <div class="review-author">Александр И.</div>
-                            <div class="review-text">Отличная компания! Работаю уже 2 года, всегда вовремя платят.</div>
-                            <div class="review-date">15.04.2026</div>
+                            <div class="review-author" id="resultReviewAuthor">Александр И.</div>
+                            <div class="review-text" id="resultReviewText">Отличная компания! Работаю уже 2 года, всегда вовремя платят.</div>
+                            <div class="review-date" id="resultReviewDate">15.04.2026</div>
                         </div>
                     </div>
                 </div>
@@ -888,6 +887,7 @@
         <div class="container">
             <h2 class="section-title" data-key="all_jobs_title">Все вакансии</h2>
             <p class="section-subtitle" data-key="all_jobs_subtitle">Найдите подходящую работу</p>
+            <p id="jobsFilterResult" class="section-subtitle" style="margin-top: -35px; margin-bottom: 25px; font-size: 15px;"></p>
             <div class="row">
                 <div class="col-lg-3">
                     <div class="card" style="padding: 24px; border-radius: 16px; box-shadow: var(--shadow);">
@@ -953,7 +953,7 @@
                             <div class="blog-date">24 апреля 2026</div>
                             <h3 class="blog-title" data-key="blog1_title">Как легально работать в Казахстане</h3>
                             <p class="blog-excerpt" data-key="blog1_excerpt">Полное руководство по оформлению документов для трудовых мигрантов.</p>
-                            <button class="btn btn-primary-custom" data-key="btn_read">Читать</button>
+                            <button class="btn btn-primary-custom" data-key="btn_read" onclick="openBlogPost(0)">Читать</button>
                         </div>
                     </div>
                 </div>
@@ -964,7 +964,7 @@
                             <div class="blog-date">20 апреля 2026</div>
                             <h3 class="blog-title" data-key="blog2_title">Как избежать мошенничества</h3>
                             <p class="blog-excerpt" data-key="blog2_excerpt">Топ-10 признаков недобросовестного работодателя.</p>
-                            <button class="btn btn-primary-custom" data-key="btn_read">Читать</button>
+                            <button class="btn btn-primary-custom" data-key="btn_read" onclick="openBlogPost(1)">Читать</button>
                         </div>
                     </div>
                 </div>
@@ -975,7 +975,7 @@
                             <div class="blog-date">15 апреля 2026</div>
                             <h3 class="blog-title" data-key="blog3_title">Средние зарплаты в 2026</h3>
                             <p class="blog-excerpt" data-key="blog3_excerpt">Обзор зарплат в разных сферах и регионах Казахстана.</p>
-                            <button class="btn btn-primary-custom" data-key="btn_read">Читать</button>
+                            <button class="btn btn-primary-custom" data-key="btn_read" onclick="openBlogPost(2)">Читать</button>
                         </div>
                     </div>
                 </div>
@@ -1025,7 +1025,6 @@
                             <li><a href="#" class="active" onclick="showDashboardTab('overview')"><i class="bi bi-house"></i> <span data-key="menu_overview">Обзор</span></a></li>
                             <li><a href="#" onclick="showDashboardTab('applications')"><i class="bi bi-briefcase"></i> <span data-key="menu_applications">Мои отклики</span></a></li>
                             <li><a href="#" onclick="showDashboardTab('resume')"><i class="bi bi-file-earmark-person"></i> <span data-key="menu_resume">Резюме</span></a></li>
-                            <li><a href="#" onclick="showDashboardTab('settings')"><i class="bi bi-gear"></i> <span data-key="menu_settings">Настройки</span></a></li>
                             <li><a href="#" onclick="logout()"><i class="bi bi-box-arrow-right"></i> <span data-key="menu_logout">Выход</span></a></li>
                         </ul>
                     </div>
@@ -1066,21 +1065,6 @@
                                 <textarea class="form-control-custom" placeholder="Опишите ваш опыт работы" data-key="placeholder_experience"></textarea>
                             </div>
                             <button class="btn btn-primary-custom" onclick="saveResume()" data-key="btn_save_resume">Сохранить резюме</button>
-                        </div>
-                    </div>
-                    <div id="dashboard-settings" style="display: none;">
-                        <h2 style="margin-bottom: 30px;" data-key="settings_title">Настройки</h2>
-                        <div class="dashboard-card">
-                            <div class="form-group">
-                                <label data-key="label_language">Язык интерфейса</label>
-                                <select class="form-control" id="settingsLanguage">
-                                    <option value="ru">Русский</option>
-                                    <option value="uz">Узбекский</option>
-                                    <option value="tg">Таджикский</option>
-                                    <option value="en">Английский</option>
-                                </select>
-                            </div>
-                            <button class="btn btn-primary-custom" onclick="saveSettings()" data-key="btn_save_settings">Сохранить</button>
                         </div>
                     </div>
                 </div>
@@ -1183,6 +1167,7 @@
         let currentUser = null;
         let currentLang = 'ru';
         const SHARED_DATA_KEY = 'migrantkz_shared_data_v1';
+        let jobsPageBaseJobCardsCount = 0;
 
         // Translations
         const translations = {
@@ -1309,47 +1294,6 @@
                 login_title: 'Бозгаштан!', login_subtitle: 'Ба ҳисоби худ воред', label_email: 'Email', label_password: 'Парол', btn_login: 'Вуруд',
                 register_title: 'Ҳисоб эҷод кунед', register_subtitle: 'Ба мо ҳамроҳ шавед', btn_register: 'Ба қайд гузаштан'
             },
-            en: {
-                nav_home: 'Home', nav_jobs: 'Jobs', nav_blog: 'Blog', nav_about: 'About',
-                hero_title: 'Work Safely in Kazakhstan',
-                hero_subtitle: 'A unified platform for job search and employer verification. Protect yourself from fraud and find reliable work.',
-                hero_find_job: 'Find Job', hero_check_company: 'Check Company',
-                stat_jobs: 'Active Vacancies', stat_companies: 'Verified Companies', stat_employed: 'Job Seekers Placed', stat_happy: 'Happy Users',
-                features_title: 'Why Choose Us', features_subtitle: 'We help migrants find safe work in Kazakhstan',
-                feature1_title: 'Employer Verification', feature1_text: 'Database of verified companies with reviews and ratings.',
-                feature2_title: 'Large Job Selection', feature2_text: 'Thousands of relevant vacancies in various fields.',
-                feature3_title: 'Support 24/7', feature3_text: 'Our support team is ready to help at any time.',
-                jobs_title: 'Current Vacancies', jobs_subtitle: 'Find your dream job',
-                filters_title: 'Filters', filter_city: 'City', filter_category: 'Category', option_all: 'All',
-                btn_apply: 'Apply', btn_apply_filters: 'Apply', btn_find: 'Find',
-                employer_title: 'Employer Verification', employer_subtitle: 'Enter company name to verify its reliability',
-                employer_placeholder: 'Enter company name...', btn_check: 'Check',
-                reviews_title: 'Employee Reviews',
-                testimonials_title: 'User Reviews', testimonials_subtitle: 'Stories of people who found work through our service',
-                faq_title: 'FAQ', faq_subtitle: 'Answers to popular questions about working in Kazakhstan',
-                faq1_q: 'How to find a job through MigrantKZ?', faq1_a: 'Simply register on the site, create a resume and start applying to vacancies.',
-                faq2_q: 'How to verify an employer?', faq2_a: 'Enter the company name in the "Employer Verification" section.',
-                faq3_q: 'What documents are needed to work in Kazakhstan?', faq3_a: 'Passport, migration card, work permit, registration at place of residence.',
-                contact_title: 'Contact Us', contact_subtitle: 'Have questions? Write to us, we will definitely help!',
-                contact_name: 'Your name', contact_email: 'Email', contact_phone: 'Phone', contact_message: 'Your message', btn_send: 'Send',
-                all_jobs_title: 'All Jobs', all_jobs_subtitle: 'Find suitable work',
-                blog_title: 'Blog', blog_subtitle: 'Useful articles about working in Kazakhstan',
-                blog1_title: 'How to Work Legally in Kazakhstan', blog1_excerpt: 'Complete guide to document processing for labor migrants.',
-                blog2_title: 'How to Avoid Fraud', blog2_excerpt: 'Top 10 signs of an unreliable employer.',
-                blog3_title: 'Average Salaries in 2026', blog3_excerpt: 'Overview of salaries in various sectors and regions of Kazakhstan.',
-                btn_read: 'Read',
-                about_title: 'About Us', about_subtitle: 'We help migrants find safe work',
-                about_team: 'Team', about_mission: 'Mission', about_goal: 'Goal',
-                dashboard_title: 'Personal Cabinet', menu_overview: 'Overview', menu_applications: 'My Applications', menu_resume: 'Resume', menu_settings: 'Settings', menu_logout: 'Logout',
-                welcome: 'Welcome,', stat_applications: 'Applications', stat_invites: 'Invites', stat_favorites: 'Favorites',
-                my_applications: 'My Applications', status_pending: 'Under Review',
-                my_resume: 'My Resume', label_name: 'Name', label_profession: 'Profession', label_experience: 'Work Experience', btn_save_resume: 'Save Resume',
-                settings_title: 'Settings', label_language: 'Interface Language', btn_save_settings: 'Save',
-                footer_nav: 'Navigation', footer_contacts: 'Contacts',
-                tab_login: 'Login', tab_register: 'Register',
-                login_title: 'Welcome Back!', login_subtitle: 'Sign in to your account', label_email: 'Email', label_password: 'Password', btn_login: 'Login',
-                register_title: 'Create Account', register_subtitle: 'Join us', btn_register: 'Register'
-            }
         };
 
         Object.assign(translations.ru, {
@@ -1409,24 +1353,6 @@
             alert_contact_sent: 'Ташаккур! Паёми шумо фиристода шуд.'
         });
 
-        Object.assign(translations.en, {
-            footer_text: 'A unified platform for safe job search for migrants in Kazakhstan.',
-            footer_copyright: '© 2026 MigrantKZ. All rights reserved.',
-            footer_address: 'Almaty, Dostyk street, 123',
-            status_verified: 'Verified',
-            theme_toggle_title: 'Dark theme',
-            placeholder_name: 'Your name',
-            placeholder_profession: 'Example: Driver',
-            placeholder_experience: 'Describe your work experience',
-            alert_fill_fields: 'Please fill in all fields',
-            alert_fill_required: 'Please fill in all required fields',
-            alert_resume_saved: 'Resume saved!',
-            alert_settings_saved: 'Settings saved!',
-            alert_apply_sent_prefix: 'Your application for "',
-            alert_apply_sent_suffix: '" has been sent!',
-            alert_filter_soon: 'Job filtering will be available soon!',
-            alert_contact_sent: 'Thank you! Your message has been sent.'
-        });
 
         const localizedContent = {
             ru: {
@@ -1507,32 +1433,6 @@
                 ],
                 settings_lang_options: ['Русӣ', 'Ӯзбекӣ', 'Тоҷикӣ', 'Англисӣ']
             },
-            en: {
-                page_title: 'MigrantKZ - Work Safely in Kazakhstan',
-                blog_dates: ['April 24, 2026', 'April 20, 2026', 'April 15, 2026'],
-                jobs: [
-                    { title: 'International Driver', company: 'KazTransLogistik LLP', tags: ['Transport', '3+ years experience', 'With accommodation'], location: 'Almaty' },
-                    { title: 'Welder', company: 'KazStroyMontazh LLP', tags: ['Construction', 'Certificate required'], location: 'Astana' },
-                    { title: 'Cook', company: 'Shahriyar Restaurant', tags: ['Catering', '1+ year experience'], location: 'Shymkent' },
-                    { title: 'International Driver', company: 'KazTransLogistik LLP', tags: ['Transport', '3+ years experience'], location: 'Almaty' },
-                    { title: 'Welder', company: 'KazStroyMontazh LLP', tags: [], location: 'Astana' }
-                ],
-                city_options: ['Almaty', 'Astana', 'Shymkent'],
-                category_options: ['Construction', 'Transport', 'Catering'],
-                employer_review_author: 'Alexander I.',
-                employer_review_text: 'Excellent company! I have worked here for 2 years, and salary is always on time.',
-                testimonials: [
-                    { text: '"Thanks to MigrantKZ, I found a driving job in a week. I checked the company - everything is clean!"', name: 'Alexey', role: 'Driver, Almaty' },
-                    { text: '"Employer verification helped a lot. I found out the company did not pay salaries on time."', name: 'Mikhail', role: 'Builder, Astana' },
-                    { text: '"Great site! Everything is clear, many vacancies. I found a job as a cook!"', name: 'Sergey', role: 'Cook, Shymkent' }
-                ],
-                about_texts: [
-                    'We are a team of professionals with many years of experience in employment.',
-                    'Help migrants find honest work and protect their rights.',
-                    'Build a transparent labor market where everyone can find decent work.'
-                ],
-                settings_lang_options: ['Russian', 'Uzbek', 'Tajik', 'English']
-            }
         };
 
         function getSharedData() {
@@ -1543,7 +1443,8 @@
                 return {
                     jobs: Array.isArray(parsed.jobs) ? parsed.jobs : [],
                     employers: Array.isArray(parsed.employers) ? parsed.employers : [],
-                    reviews: Array.isArray(parsed.reviews) ? parsed.reviews : []
+                    reviews: Array.isArray(parsed.reviews) ? parsed.reviews : [],
+                    faq: Array.isArray(parsed.faq) ? parsed.faq : []
                 };
             } catch (error) {
                 return null;
@@ -1586,12 +1487,44 @@
             }
         }
 
+        function renderFaqFromSharedData() {
+            const shared = getSharedData();
+            if (!shared || !shared.faq || shared.faq.length === 0) return;
+            const accordion = document.getElementById('faqAccordion');
+            if (!accordion) return;
+            accordion.innerHTML = '';
+            shared.faq.forEach((item, index) => {
+                const accordionItem = document.createElement('div');
+                accordionItem.className = 'accordion-item';
+                accordionItem.innerHTML = `
+                    <h2 class="accordion-header">
+                        <button class="accordion-button ${index === 0 ? '' : 'collapsed'}" type="button" data-bs-toggle="collapse" data-bs-target="#faq-shared-${index}">
+                            ${escapeHtml(item.question)}
+                        </button>
+                    </h2>
+                    <div id="faq-shared-${index}" class="accordion-collapse collapse ${index === 0 ? 'show' : ''}" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">${escapeHtml(item.answer)}</div>
+                    </div>
+                `;
+                accordion.appendChild(accordionItem);
+            });
+        }
+
         function applySharedDataOverrides() {
             const shared = getSharedData();
             if (!shared) return;
 
             if (shared.jobs.length) {
                 const homeCards = document.querySelectorAll('#home-page #jobs .job-card');
+                const jobsContainer = document.querySelector('#jobs-page .col-lg-9');
+                if (jobsContainer && jobsPageBaseJobCardsCount && jobsPageBaseJobCardsCount > 0) {
+                    const directCards = jobsContainer.querySelectorAll('> .job-card');
+                    if (directCards.length > jobsPageBaseJobCardsCount) {
+                        for (let i = jobsPageBaseJobCardsCount; i < directCards.length; i++) {
+                            directCards[i].remove();
+                        }
+                    }
+                }
                 const allJobsCards = document.querySelectorAll('#jobs-page .job-card');
 
                 homeCards.forEach((card, idx) => {
@@ -1603,7 +1536,6 @@
                     }
                 });
 
-                const jobsContainer = document.querySelector('#jobs-page .col-lg-9');
                 allJobsCards.forEach((card, idx) => {
                     if (shared.jobs[idx]) {
                         renderJobCard(card, shared.jobs[idx]);
@@ -1613,8 +1545,10 @@
                     }
                 });
                 if (jobsContainer && shared.jobs.length > allJobsCards.length && allJobsCards[0]) {
-                    for (let i = allJobsCards.length; i < shared.jobs.length; i++) {
+                    const baseCardCount = allJobsCards.length;
+                    for (let i = baseCardCount; i < shared.jobs.length; i++) {
                         const clone = allJobsCards[0].cloneNode(true);
+                        clone.dataset.sharedClone = '1';
                         renderJobCard(clone, shared.jobs[i]);
                         jobsContainer.appendChild(clone);
                     }
@@ -1625,7 +1559,9 @@
                 const employer = shared.employers[0];
                 const nameEl = document.getElementById('resultCompanyName');
                 const statusEl = document.getElementById('resultCompanyStatus');
+                const ratingEl = document.getElementById('resultCompanyRating');
                 if (nameEl) nameEl.textContent = employer.name || '';
+                if (ratingEl) ratingEl.textContent = Number(employer.rating || 0).toFixed(1);
                 if (statusEl) {
                     const statusMap = {
                         verified: t('status_verified', 'Проверено'),
@@ -1641,13 +1577,31 @@
 
             if (shared.reviews.length) {
                 const review = shared.reviews[0];
-                const reviewAuthor = document.querySelector('#companyResult .review-author');
-                const reviewText = document.querySelector('#companyResult .review-text');
-                const reviewDate = document.querySelector('#companyResult .review-date');
+                const reviewAuthor = document.getElementById('resultReviewAuthor');
+                const reviewText = document.getElementById('resultReviewText');
+                const reviewDate = document.getElementById('resultReviewDate');
                 if (reviewAuthor) reviewAuthor.textContent = review.author || '';
                 if (reviewText) reviewText.textContent = review.text || '';
                 if (reviewDate) reviewDate.textContent = review.date || '';
             }
+        }
+
+        function getCurrentJobsForUI() {
+            const shared = getSharedData();
+            if (shared?.jobs?.length) return shared.jobs;
+            return localizedContent[currentLang]?.jobs || localizedContent.ru.jobs;
+        }
+
+        function getCurrentEmployersForUI() {
+            const shared = getSharedData();
+            if (shared?.employers?.length) return shared.employers;
+            return [{ name: 'КазТрансЛогистик', rating: 4.5, status: 'verified' }];
+        }
+
+        function getCurrentReviewsForUI() {
+            const shared = getSharedData();
+            if (shared?.reviews?.length) return shared.reviews;
+            return [{ author: localizedContent[currentLang]?.employer_review_author || 'Александр И.', text: localizedContent[currentLang]?.employer_review_text || '', date: '15.04.2026' }];
         }
 
         function applyLocalizedData(lang) {
@@ -1754,6 +1708,10 @@
             });
             applyLocalizedData(lang);
             applySharedDataOverrides();
+            if (isLoggedIn && currentUser?.name) {
+                const userNameEl = document.getElementById('userName');
+                if (userNameEl) userNameEl.textContent = getWelcomeText(currentUser.name);
+            }
         }
 
         function setLanguage(lang) {
@@ -1762,6 +1720,11 @@
             translatePage(lang);
             updateAuthButton();
             document.getElementById('langDropdown').classList.remove('show');
+        }
+
+        function getWelcomeText(name) {
+            const prefix = (translations[currentLang]?.welcome || 'Добро пожаловать,').replace(/\s*,$/, '');
+            return name ? `${prefix}, ${name}!` : prefix;
         }
 
         function toggleLangDropdown() {
@@ -1805,7 +1768,24 @@
                 currentUser = JSON.parse(savedUser);
                 isLoggedIn = true;
                 updateAuthButton();
+                const userNameEl = document.getElementById('userName');
+                if (userNameEl) userNameEl.textContent = getWelcomeText(currentUser?.name);
             }
+
+            const jobsContainer = document.querySelector('#jobs-page .col-lg-9');
+            if (jobsContainer) {
+                jobsPageBaseJobCardsCount = jobsContainer.querySelectorAll('> .job-card').length;
+            }
+
+            const filterCityEl = document.getElementById('filterCity');
+            const filterCategoryEl = document.getElementById('filterCategory');
+            if (filterCityEl) filterCityEl.addEventListener('change', filterJobs);
+            if (filterCategoryEl) filterCategoryEl.addEventListener('change', filterJobs);
+
+            const homeFilterCityEl = document.getElementById('homeFilterCity');
+            const homeFilterCategoryEl = document.getElementById('homeFilterCategory');
+            if (homeFilterCityEl) homeFilterCityEl.addEventListener('change', applyHomeFilters);
+            if (homeFilterCategoryEl) homeFilterCategoryEl.addEventListener('change', applyHomeFilters);
         });
 
         function toggleTheme() {
@@ -1864,7 +1844,7 @@
                 closeModal();
                 showPage('dashboard');
                 const userNameEl = document.getElementById('userName');
-                if (userNameEl) userNameEl.textContent = translations[currentLang]?.welcome?.replace(',', '') || 'Добро пожаловать';
+                if (userNameEl) userNameEl.textContent = getWelcomeText(currentUser.name);
             } else { alert(t('alert_fill_fields', 'Пожалуйста, заполните все поля')); }
         }
 
@@ -1880,7 +1860,7 @@
                 closeModal();
                 showPage('dashboard');
                 const userNameEl = document.getElementById('userName');
-                if (userNameEl) userNameEl.textContent = (translations[currentLang]?.welcome?.replace(',', '') || 'Добро пожаловать') + ' ' + name + '!';
+                if (userNameEl) userNameEl.textContent = getWelcomeText(name);
             } else { alert(t('alert_fill_required', 'Пожалуйста, заполните все обязательные поля')); }
         }
 
@@ -1909,8 +1889,8 @@
             document.getElementById('dashboard-overview').style.display = 'none';
             document.getElementById('dashboard-applications').style.display = 'none';
             document.getElementById('dashboard-resume').style.display = 'none';
-            document.getElementById('dashboard-settings').style.display = 'none';
-            document.getElementById('dashboard-' + tab).style.display = 'block';
+            const tabEl = document.getElementById('dashboard-' + tab);
+            if (tabEl) tabEl.style.display = 'block';
         }
 
         function saveResume() { alert(t('alert_resume_saved', 'Резюме сохранено!')); }
@@ -1923,8 +1903,147 @@
             alert(t('alert_apply_sent_prefix', 'Ваш отклик на вакансию "') + localizedTitle + t('alert_apply_sent_suffix', '" отправлен!'));
         }
         function applyJobFromButton(button) { applyJob(button?.dataset?.jobTitle || ''); }
-        function searchCompany() { const input = document.getElementById('companySearchInput').value; const result = document.getElementById('companyResult'); if (input.trim() !== '') { document.getElementById('resultCompanyName').textContent = 'ТОО "' + input + '"'; result.style.display = 'block'; result.scrollIntoView({ behavior: 'smooth' }); } }
-        function filterJobs() { alert(t('alert_filter_soon', 'Фильтрация вакансий скоро будет доступна!')); }
+        function searchCompany() {
+            const input = document.getElementById('companySearchInput').value.trim();
+            const result = document.getElementById('companyResult');
+            if (!input) {
+                alert(currentLang === 'ru' ? 'Введите название компании!' : currentLang === 'uz' ? 'Kompaniya nomini kiriting!' : currentLang === 'tg' ? 'Номи компанияро ворид кунед!' : 'Enter company name!');
+                return;
+            }
+
+            const employers = getCurrentEmployersForUI();
+            const reviews = getCurrentReviewsForUI();
+            
+            // Ищем точное или частичное совпадение
+            const matchedEmployer = employers.find((employer) => {
+                const employerName = (employer.name || '').toLowerCase();
+                const searchInput = input.toLowerCase();
+                return employerName === searchInput || employerName.includes(searchInput) || searchInput.includes(employerName);
+            });
+            
+            // Находим отзывы для найденной компании
+            const matchedReview = matchedEmployer 
+                ? reviews.find((review) => (review.company || '').toLowerCase().includes(matchedEmployer.name.toLowerCase()))
+                : null;
+
+            const nameEl = document.getElementById('resultCompanyName');
+            const statusEl = document.getElementById('resultCompanyStatus');
+            const ratingEl = document.getElementById('resultCompanyRating');
+            const reviewSection = document.querySelector('.company-reviews');
+            const reviewAuthor = document.getElementById('resultReviewAuthor');
+            const reviewText = document.getElementById('resultReviewText');
+            const reviewDate = document.getElementById('resultReviewDate');
+
+            if (matchedEmployer) {
+                // Компания найдена - показываем полную информацию
+                if (nameEl) nameEl.textContent = matchedEmployer.name;
+                if (ratingEl) ratingEl.textContent = Number(matchedEmployer.rating || 0).toFixed(1);
+                
+                if (statusEl) {
+                    statusEl.classList.remove('status-verified', 'status-risky');
+                    if (matchedEmployer.status === 'risky') {
+                        statusEl.classList.add('status-risky');
+                        statusEl.textContent = currentLang === 'ru' ? 'Риск' : currentLang === 'uz' ? 'Xavf' : currentLang === 'tg' ? 'Хатар' : 'Risk';
+                    } else if (matchedEmployer.status === 'pending') {
+                        statusEl.classList.add('status-verified');
+                        statusEl.textContent = currentLang === 'ru' ? 'На проверке' : currentLang === 'uz' ? 'Tekshiruvda' : currentLang === 'tg' ? 'Дар санҷиш' : 'Pending';
+                    } else {
+                        statusEl.classList.add('status-verified');
+                        statusEl.textContent = t('status_verified', 'Проверено');
+                    }
+                }
+                
+                // Показываем отзывы если они есть
+                if (reviewSection) reviewSection.style.display = 'block';
+                if (matchedReview) {
+                    if (reviewAuthor) reviewAuthor.textContent = matchedReview.author || '-';
+                    if (reviewText) reviewText.textContent = matchedReview.text || '-';
+                    if (reviewDate) reviewDate.textContent = matchedReview.date || '-';
+                } else {
+                    if (reviewAuthor) reviewAuthor.textContent = '-';
+                    if (reviewText) reviewText.textContent = currentLang === 'ru' ? 'Отзывов пока нет.' : currentLang === 'uz' ? 'Sharhlar hali yo\'q.' : currentLang === 'tg' ? 'Ҳоло шарҳ нест.' : 'No reviews yet.';
+                    if (reviewDate) reviewDate.textContent = '-';
+                }
+            } else {
+                // Компания НЕ найдена
+                if (nameEl) nameEl.textContent = input;
+                if (ratingEl) ratingEl.textContent = '0.0';
+                
+                if (statusEl) {
+                    statusEl.classList.remove('status-verified');
+                    statusEl.classList.add('status-risky');
+                    statusEl.textContent = currentLang === 'ru' ? 'Не найдено' : currentLang === 'uz' ? 'Topilmadi' : currentLang === 'tg' ? 'Ёфт нашуд' : 'Not found';
+                }
+                
+                // Скрываем или показываем сообщение об отсутствии отзывов
+                if (reviewSection) reviewSection.style.display = 'block';
+                if (reviewAuthor) reviewAuthor.textContent = '-';
+                if (reviewText) reviewText.textContent = currentLang === 'ru' ? 'Эта компания отсутствует в нашей базе. Будьте осторожны!' : currentLang === 'uz' ? 'Ushbu kompaniya bazamizda yo\'q. Ehtiyot bo\'ling!' : currentLang === 'tg' ? 'Ин компания дар пойгоҳи мо нест. Эҳтиёт бошед!' : 'This company is not in our database. Be careful!';
+                if (reviewDate) reviewDate.textContent = '-';
+            }
+
+            result.style.display = 'block';
+            result.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function filterJobs() {
+            const city = (document.getElementById('filterCity')?.value || '').trim();
+            const category = (document.getElementById('filterCategory')?.value || '').trim();
+            const allMarker = (translations[currentLang]?.option_all || 'Все').toLowerCase();
+            const cards = document.querySelectorAll('#jobs-page .job-card');
+            const resultEl = document.getElementById('jobsFilterResult');
+            let visibleCount = 0;
+
+            cards.forEach((card) => {
+                const locationText = card.querySelector('.job-location')?.textContent?.trim().toLowerCase() || '';
+                const tagText = Array.from(card.querySelectorAll('.job-tag')).map((t) => t.textContent.toLowerCase()).join(' ');
+
+                const cityMatch = !city || city.toLowerCase() === allMarker || locationText.includes(city.toLowerCase());
+                const categoryMatch = !category || category.toLowerCase() === allMarker || tagText.includes(category.toLowerCase());
+                const isVisible = cityMatch && categoryMatch;
+                card.style.display = isVisible ? '' : 'none';
+                if (isVisible) visibleCount += 1;
+            });
+
+            if (resultEl) {
+                const total = cards.length;
+                const textByLang = {
+                    ru: `Найдено вакансий: ${visibleCount} из ${total}`,
+                    uz: `Topilgan vakansiyalar: ${visibleCount} / ${total}`,
+                    tg: `Ҷойҳои кории ёфтшуда: ${visibleCount} аз ${total}`,
+                    en: `Jobs found: ${visibleCount} of ${total}`
+                };
+                resultEl.textContent = textByLang[currentLang] || textByLang.ru;
+            }
+        }
+
+        function applyHomeFilters() {
+            const homeCity = document.getElementById('homeFilterCity')?.value || '';
+            const homeCategory = document.getElementById('homeFilterCategory')?.value || '';
+            const citySelect = document.getElementById('filterCity');
+            const categorySelect = document.getElementById('filterCategory');
+            if (citySelect) citySelect.value = homeCity;
+            if (categorySelect) categorySelect.value = homeCategory;
+            showPage('jobs');
+            filterJobs();
+        }
+
+        function openBlogPost(index) {
+            const titleKey = `blog${index + 1}_title`;
+            const excerptKey = `blog${index + 1}_excerpt`;
+            alert(`${t(titleKey, '')}\n\n${t(excerptKey, '')}`);
+        }
+
+        // If data is changed in admin.html (same origin), update UI automatically.
+        window.addEventListener('storage', function(e) {
+            if (!e || e.key !== SHARED_DATA_KEY) return;
+            applySharedDataOverrides();
+            // Recount filter results if user is on vacancies page.
+            const jobsPage = document.getElementById('jobs-page');
+            if (jobsPage && jobsPage.style.display === 'block') {
+                filterJobs();
+            }
+        });
         function submitContact() { const name = document.getElementById('contactName').value; const email = document.getElementById('contactEmail').value; const message = document.getElementById('contactMessage').value; if (name && email && message) { alert(t('alert_contact_sent', 'Спасибо! Ваше сообщение отправлено.')); } else { alert(t('alert_fill_fields', 'Пожалуйста, заполните все поля')); } }
 
         window.addEventListener('scroll', function() {
