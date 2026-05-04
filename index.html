@@ -836,6 +836,7 @@
                     <div>
                         <h2 class="section-title" data-key="faq_title">Часто задаваемые вопросы</h2>
                         <p class="section-subtitle" data-key="faq_subtitle">Ответы на популярные вопросы о работе в Казахстане</p>
+                        <p id="faqDebug" style="font-size: 14px; color: #666; margin-top: 8px; display: none;"></p>
                     </div>
                     <button class="btn btn-outline-custom" onclick="refreshSharedDataFromStorage(true)">Обновить FAQ</button>
                 </div>
@@ -1500,22 +1501,52 @@
             const accordion = document.getElementById('faqAccordion');
             if (!accordion) return;
 
-            // If no shared data, keep the existing HTML content (hardcoded FAQ)
+            // If no shared data, restore the default hardcoded FAQ
             if (!shared) {
+                restoreDefaultFaq();
                 return;
             }
 
-            // If shared data exists but FAQ is empty, show an empty state
+            // If shared data exists but FAQ is empty, restore the default hardcoded FAQ
             if (!shared.faq || shared.faq.length === 0) {
-                accordion.innerHTML = `
-                    <div class="text-center text-muted py-4">Текущие вопросы отсутствуют. Добавьте их через админку.</div>
-                `;
+                restoreDefaultFaq();
                 return;
             }
 
             // Clear and rebuild from shared data
             accordion.innerHTML = '';
             shared.faq.forEach((item, index) => {
+                const accordionItem = document.createElement('div');
+                accordionItem.className = 'accordion-item';
+                accordionItem.innerHTML = `
+                    <h2 class="accordion-header">
+                        <button class="accordion-button ${index === 0 ? '' : 'collapsed'}" type="button" data-bs-toggle="collapse" data-bs-target="#faq-shared-${index}">
+                            ${escapeHtml(item.question)}
+                        </button>
+                    </h2>
+                    <div id="faq-shared-${index}" class="accordion-collapse collapse ${index === 0 ? 'show' : ''}" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">${escapeHtml(item.answer)}</div>
+                    </div>
+                `;
+                accordion.appendChild(accordionItem);
+            });
+        }
+
+        function renderFaqDirectlyFromStorage() {
+            const raw = localStorage.getItem(SHARED_DATA_KEY) || '';
+            if (!raw) return;
+            let parsed;
+            try {
+                parsed = JSON.parse(raw);
+            } catch (error) {
+                return;
+            }
+            const faq = Array.isArray(parsed.faq) ? parsed.faq : [];
+            if (!faq.length) return;
+            const accordion = document.getElementById('faqAccordion');
+            if (!accordion) return;
+            accordion.innerHTML = '';
+            faq.forEach((item, index) => {
                 const accordionItem = document.createElement('div');
                 accordionItem.className = 'accordion-item';
                 accordionItem.innerHTML = `
@@ -1568,6 +1599,7 @@
 
             // Render FAQ first (will use shared data if available, or restore defaults)
             renderFaqFromSharedData();
+            renderFaqDirectlyFromStorage();
 
             if (!shared) return;
 
@@ -1813,20 +1845,18 @@
                 document.getElementById('themeIcon').classList.add('bi-sun-fill');
             }
 
-            lastSharedDataJson = localStorage.getItem(SHARED_DATA_KEY) || '';
-            refreshSharedDataFromStorage();
+            lastSharedDataJson = '';
+            refreshSharedDataFromStorage(true);
 
             const savedLang = localStorage.getItem('language');
             if (savedLang) {
                 currentLang = savedLang;
                 translatePage(savedLang);
-            } else {
-                applySharedDataOverrides();
             }
             updateAuthButton();
 
             setInterval(refreshSharedDataFromStorage, 1500);
-            window.addEventListener('focus', refreshSharedDataFromStorage);
+            window.addEventListener('focus', () => refreshSharedDataFromStorage(true));
             if (broadcastChannel) {
                 broadcastChannel.onmessage = function(event) {
                     if (!event || !event.data || event.data.type !== 'shared-data-updated') return;
@@ -2110,11 +2140,25 @@
             const raw = localStorage.getItem(SHARED_DATA_KEY) || '';
             if (!force && raw === lastSharedDataJson) return;
             lastSharedDataJson = raw;
+            const shared = getSharedData();
+            if (!shared) {
+                showFaqDebug('FAQ: локальные данные не найдены или содержат ошибку.');
+            } else {
+                showFaqDebug(`FAQ: загружено ${shared.faq.length} вопросов.`);
+            }
             applySharedDataOverrides();
+            renderFaqDirectlyFromStorage();
             const jobsPage = document.getElementById('jobs-page');
             if (jobsPage && jobsPage.style.display === 'block') {
                 filterJobs();
             }
+        }
+
+        function showFaqDebug(message) {
+            const debugEl = document.getElementById('faqDebug');
+            if (!debugEl) return;
+            debugEl.textContent = message;
+            debugEl.style.display = 'block';
         }
 
         // If data is changed in admin.html (same origin), update UI automatically.
