@@ -395,6 +395,9 @@
         .faq .accordion-button { padding: 20px 24px; font-weight: 600; font-size: 16px; background: var(--light-gray); border: none; box-shadow: none !important; }
         .faq .accordion-button:not(.collapsed) { background: var(--primary); color: white; }
         .faq .accordion-body { padding: 20px 24px; color: var(--gray); }
+        .faq-item { background: var(--white); border-radius: 20px; padding: 24px; margin-bottom: 18px; box-shadow: var(--shadow); }
+        .faq-item h3 { font-size: 20px; margin-bottom: 10px; }
+        .faq-item p { color: var(--gray); margin: 0; line-height: 1.7; }
 
         .contact {
             padding: 100px 0;
@@ -1502,65 +1505,44 @@
             if (!accordion) return;
 
             // If no shared data, restore the default hardcoded FAQ
-            if (!shared) {
+            if (!shared || !shared.faq || shared.faq.length === 0) {
                 restoreDefaultFaq();
                 return;
             }
 
-            // If shared data exists but FAQ is empty, restore the default hardcoded FAQ
-            if (!shared.faq || shared.faq.length === 0) {
-                restoreDefaultFaq();
-                return;
-            }
-
-            // Clear and rebuild from shared data
-            accordion.innerHTML = '';
-            shared.faq.forEach((item, index) => {
-                const accordionItem = document.createElement('div');
-                accordionItem.className = 'accordion-item';
-                accordionItem.innerHTML = `
-                    <h2 class="accordion-header">
-                        <button class="accordion-button ${index === 0 ? '' : 'collapsed'}" type="button" data-bs-toggle="collapse" data-bs-target="#faq-shared-${index}">
-                            ${escapeHtml(item.question)}
-                        </button>
-                    </h2>
-                    <div id="faq-shared-${index}" class="accordion-collapse collapse ${index === 0 ? 'show' : ''}" data-bs-parent="#faqAccordion">
-                        <div class="accordion-body">${escapeHtml(item.answer)}</div>
-                    </div>
-                `;
-                accordion.appendChild(accordionItem);
-            });
+            renderFaqItems(shared.faq);
         }
 
-        function renderFaqDirectlyFromStorage() {
+        function renderFaqItems(faqItems) {
+            const accordion = document.getElementById('faqAccordion');
+            if (!accordion) return;
+            accordion.innerHTML = faqItems.map((item) => `
+                <div class="faq-item">
+                    <h3>${escapeHtml(item.question)}</h3>
+                    <p>${escapeHtml(item.answer)}</p>
+                </div>
+            `).join('');
+        }
+
+        function updateFaqSection() {
             const raw = localStorage.getItem(SHARED_DATA_KEY) || '';
-            if (!raw) return;
+            if (!raw) {
+                restoreDefaultFaq();
+                return;
+            }
             let parsed;
             try {
                 parsed = JSON.parse(raw);
             } catch (error) {
+                restoreDefaultFaq();
                 return;
             }
             const faq = Array.isArray(parsed.faq) ? parsed.faq : [];
-            if (!faq.length) return;
-            const accordion = document.getElementById('faqAccordion');
-            if (!accordion) return;
-            accordion.innerHTML = '';
-            faq.forEach((item, index) => {
-                const accordionItem = document.createElement('div');
-                accordionItem.className = 'accordion-item';
-                accordionItem.innerHTML = `
-                    <h2 class="accordion-header">
-                        <button class="accordion-button ${index === 0 ? '' : 'collapsed'}" type="button" data-bs-toggle="collapse" data-bs-target="#faq-shared-${index}">
-                            ${escapeHtml(item.question)}
-                        </button>
-                    </h2>
-                    <div id="faq-shared-${index}" class="accordion-collapse collapse ${index === 0 ? 'show' : ''}" data-bs-parent="#faqAccordion">
-                        <div class="accordion-body">${escapeHtml(item.answer)}</div>
-                    </div>
-                `;
-                accordion.appendChild(accordionItem);
-            });
+            if (!faq.length) {
+                restoreDefaultFaq();
+                return;
+            }
+            renderFaqItems(faq);
         }
 
         function restoreDefaultFaq() {
@@ -1597,9 +1579,8 @@
         function applySharedDataOverrides() {
             const shared = getSharedData();
 
-            // Render FAQ first (will use shared data if available, or restore defaults)
-            renderFaqFromSharedData();
-            renderFaqDirectlyFromStorage();
+            // Update FAQ section from storage or default content
+            updateFaqSection();
 
             if (!shared) return;
 
@@ -2147,7 +2128,7 @@
                 showFaqDebug(`FAQ: загружено ${shared.faq.length} вопросов.`);
             }
             applySharedDataOverrides();
-            renderFaqDirectlyFromStorage();
+            updateFaqSection();
             const jobsPage = document.getElementById('jobs-page');
             if (jobsPage && jobsPage.style.display === 'block') {
                 filterJobs();
