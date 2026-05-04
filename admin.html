@@ -501,6 +501,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const SHARED_DATA_KEY = 'migrantkz_shared_data_v1';
+        const SHARED_UPDATE_CHANNEL = 'migrantkz_shared_data_channel';
+        const broadcastChannel = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel(SHARED_UPDATE_CHANNEL) : null;
 
         const defaultData = {
             jobs: [
@@ -640,6 +642,10 @@
 
         function saveData() {
             localStorage.setItem(SHARED_DATA_KEY, JSON.stringify(sharedData));
+            localStorage.setItem(SHARED_DATA_KEY + '_updated', Date.now().toString());
+            if (broadcastChannel) {
+                broadcastChannel.postMessage({ type: 'shared-data-updated' });
+            }
         }
 
         function statusBadge(status) {

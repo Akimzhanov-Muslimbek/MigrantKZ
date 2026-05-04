@@ -832,8 +832,13 @@
 
         <section class="faq" id="faq">
             <div class="container">
-                <h2 class="section-title" data-key="faq_title">Часто задаваемые вопросы</h2>
-                <p class="section-subtitle" data-key="faq_subtitle">Ответы на популярные вопросы о работе в Казахстане</p>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h2 class="section-title" data-key="faq_title">Часто задаваемые вопросы</h2>
+                        <p class="section-subtitle" data-key="faq_subtitle">Ответы на популярные вопросы о работе в Казахстане</p>
+                    </div>
+                    <button class="btn btn-outline-custom" onclick="refreshSharedDataFromStorage(true)">Обновить FAQ</button>
+                </div>
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
                         <div class="accordion" id="faqAccordion">
@@ -1167,7 +1172,10 @@
         let currentUser = null;
         let currentLang = 'ru';
         const SHARED_DATA_KEY = 'migrantkz_shared_data_v1';
+        const SHARED_UPDATE_CHANNEL = 'migrantkz_shared_data_channel';
+        const broadcastChannel = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel(SHARED_UPDATE_CHANNEL) : null;
         let jobsPageBaseJobCardsCount = 0;
+        let lastSharedDataJson = null;
 
         // Translations
         const translations = {
@@ -1805,13 +1813,26 @@
                 document.getElementById('themeIcon').classList.add('bi-sun-fill');
             }
 
+            lastSharedDataJson = localStorage.getItem(SHARED_DATA_KEY) || '';
+            refreshSharedDataFromStorage();
+
             const savedLang = localStorage.getItem('language');
             if (savedLang) {
                 currentLang = savedLang;
                 translatePage(savedLang);
+            } else {
+                applySharedDataOverrides();
             }
-            applySharedDataOverrides();
             updateAuthButton();
+
+            setInterval(refreshSharedDataFromStorage, 1500);
+            window.addEventListener('focus', refreshSharedDataFromStorage);
+            if (broadcastChannel) {
+                broadcastChannel.onmessage = function(event) {
+                    if (!event || !event.data || event.data.type !== 'shared-data-updated') return;
+                    refreshSharedDataFromStorage();
+                };
+            }
 
             const savedUser = localStorage.getItem('user');
             if (savedUser) {
@@ -2085,15 +2106,21 @@
             alert(`${t(titleKey, '')}\n\n${t(excerptKey, '')}`);
         }
 
-        // If data is changed in admin.html (same origin), update UI automatically.
-        window.addEventListener('storage', function(e) {
-            if (!e || e.key !== SHARED_DATA_KEY) return;
+        function refreshSharedDataFromStorage(force = false) {
+            const raw = localStorage.getItem(SHARED_DATA_KEY) || '';
+            if (!force && raw === lastSharedDataJson) return;
+            lastSharedDataJson = raw;
             applySharedDataOverrides();
-            // Recount filter results if user is on vacancies page.
             const jobsPage = document.getElementById('jobs-page');
             if (jobsPage && jobsPage.style.display === 'block') {
                 filterJobs();
             }
+        }
+
+        // If data is changed in admin.html (same origin), update UI automatically.
+        window.addEventListener('storage', function(e) {
+            if (!e || (e.key !== SHARED_DATA_KEY && e.key !== SHARED_DATA_KEY + '_updated')) return;
+            refreshSharedDataFromStorage();
         });
         function submitContact() { const name = document.getElementById('contactName').value; const email = document.getElementById('contactEmail').value; const message = document.getElementById('contactMessage').value; if (name && email && message) { alert(t('alert_contact_sent', 'Спасибо! Ваше сообщение отправлено.')); } else { alert(t('alert_fill_fields', 'Пожалуйста, заполните все поля')); } }
 
