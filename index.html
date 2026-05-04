@@ -1447,6 +1447,15 @@
             },
         };
 
+        function escapeHtml(text) {
+            return String(text || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
         function getSharedData() {
             const raw = localStorage.getItem(SHARED_DATA_KEY);
             if (!raw) return null;
@@ -1516,12 +1525,16 @@
         function renderFaqItems(faqItems) {
             const accordion = document.getElementById('faqAccordion');
             if (!accordion) return;
-            accordion.innerHTML = faqItems.map((item) => `
+            console.log('renderFaqItems called with:', faqItems);
+            const html = faqItems.map((item) => `
                 <div class="faq-item">
                     <h3>${escapeHtml(item.question)}</h3>
                     <p>${escapeHtml(item.answer)}</p>
                 </div>
             `).join('');
+            console.log('Generated HTML:', html);
+            accordion.innerHTML = html;
+            console.log('accordion.innerHTML set, current:', accordion.innerHTML);
         }
 
         function updateFaqSection() {
@@ -1534,10 +1547,12 @@
             try {
                 parsed = JSON.parse(raw);
             } catch (error) {
+                console.error('JSON parse error:', error);
                 restoreDefaultFaq();
                 return;
             }
             const faq = Array.isArray(parsed.faq) ? parsed.faq : [];
+            console.log('updateFaqSection: faq array =', faq);
             if (!faq.length) {
                 restoreDefaultFaq();
                 return;
