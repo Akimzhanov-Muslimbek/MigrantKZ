@@ -64,7 +64,7 @@
         .navbar {
             background: var(--white);
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
-            padding: 15px 0;
+            padding: 12px 0;
             position: fixed;
             width: 100%;
             top: 0;
@@ -72,17 +72,18 @@
             transition: all 0.3s ease;
         }
 
-        .navbar.scrolled { padding: 10px 0; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); }
+        .navbar.scrolled { padding: 8px 0; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); }
 
-        .navbar-brand { font-size: 28px; font-weight: 800; color: var(--primary) !important; text-decoration: none; }
+        .navbar-brand { font-size: 22px; font-weight: 800; color: var(--primary) !important; text-decoration: none; }
         .navbar-brand span { color: var(--dark); }
 
         .nav-link {
             font-weight: 500;
             color: var(--dark) !important;
-            padding: 10px 20px !important;
+            padding: 8px 16px !important;
             transition: all 0.3s ease;
             position: relative;
+            font-size: 14px;
         }
 
         .nav-link:hover { color: var(--primary) !important; }
@@ -448,33 +449,40 @@
         footer {
             background: var(--dark);
             color: white;
-            padding: 60px 0 30px;
+            padding: 24px 0 10px;
         }
 
-        .footer-brand { font-size: 28px; font-weight: 800; color: var(--primary); margin-bottom: 16px; }
-        .footer-text { color: rgba(255, 255, 255, 0.6); margin-bottom: 24px; }
-        .footer-title { font-size: 18px; font-weight: 600; margin-bottom: 20px; }
-        .footer-links { list-style: none; padding: 0; }
-        .footer-links li { margin-bottom: 12px; }
-        .footer-links a { color: rgba(255, 255, 255, 0.6); text-decoration: none; transition: all 0.3s ease; }
+        .footer-brand { font-size: 20px; font-weight: 800; color: var(--primary); margin-bottom: 8px; }
+        .footer-text { color: rgba(255, 255, 255, 0.7); margin-bottom: 10px; line-height: 1.4; max-width: 320px; }
+        .footer-title { font-size: 15px; font-weight: 600; margin-bottom: 10px; }
+        .footer-links { list-style: none; padding: 0; margin: 0; }
+        .footer-links li { margin-bottom: 6px; }
+        .footer-links a, .footer-links span { color: rgba(255, 255, 255, 0.75); text-decoration: none; transition: all 0.3s ease; font-size: 13px; }
         .footer-links a:hover { color: var(--primary); }
 
-        .social-links { display: flex; gap: 12px; }
+        .social-links { display: flex; gap: 8px; margin-top: 4px; }
         .social-links a {
-            width: 44px;
-            height: 44px;
+            width: 36px;
+            height: 36px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 18px;
+            font-size: 15px;
             transition: all 0.3s ease;
         }
 
-        .social-links a:hover { background: var(--primary); transform: translateY(-3px); }
-        .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.1); margin-top: 40px; padding-top: 30px; text-align: center; color: rgba(255, 255, 255, 0.5); }
+        .social-links a:hover { background: var(--primary); transform: translateY(-1px); }
+        .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.1); margin-top: 16px; padding-top: 12px; text-align: center; color: rgba(255, 255, 255, 0.55); font-size: 12px; }
+        .footer-row { gap: 12px; align-items: flex-start; justify-content: center; text-align: center; }
+        .footer-col { padding-bottom: 6px; display: flex; flex-direction: column; align-items: center; }
+        .footer-col-small { max-width: 220px; }
+        .footer-compact .footer-links li { margin-bottom: 4px; }
+        .footer-links { text-align: center; }
+        .social-links { justify-content: center; }
+        .dashboard-empty { color: var(--gray); padding: 24px 0; text-align: center; }
 
         .modal-overlay {
             position: fixed;
@@ -537,6 +545,27 @@
         .dashboard-stat-number { font-size: 36px; font-weight: 700; color: var(--primary); }
         .dashboard-stat-label { color: var(--gray); font-size: 14px; }
 
+        .profile-header { display: flex; align-items: center; gap: 20px; margin-bottom: 24px; flex-wrap: wrap; }
+        .profile-avatar-wrap { position: relative; width: 96px; height: 96px; flex-shrink: 0; }
+        .profile-avatar {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+            background: var(--light-gray);
+        }
+        .profile-avatar-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: var(--gray);
+        }
+        .profile-avatar-actions { display: flex; flex-direction: column; gap: 8px; }
+        .profile-hint { font-size: 13px; color: var(--gray); margin-top: 8px; }
+        .form-hint { font-size: 12px; color: var(--gray); margin-top: 4px; }
+
         .blog-card { background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); transition: all 0.3s ease; margin-bottom: 30px; }
         .blog-image { height: 200px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); display: flex; align-items: center; justify-content: center; font-size: 48px; color: white; }
         .blog-content { padding: 24px; }
@@ -561,26 +590,244 @@
             transition: opacity 0.5s ease;
         }
 
-        .loader.hidden { opacity: 0; pointer-events: none; }
+        .loader.hidden { opacity: 0; pointer-events: none; visibility: hidden; }
         .loader-logo { font-size: 48px; font-weight: 800; color: var(--primary); margin-bottom: 20px; animation: pulse 1.5s ease-in-out infinite; }
         .loader-bar { width: 200px; height: 4px; background: #eee; border-radius: 2px; overflow: hidden; }
         .loader-progress { height: 100%; background: var(--primary); width: 0%; animation: load 2s ease-in-out forwards; }
 
         @keyframes load { 0% { width: 0%; } 100% { width: 100%; } }
 
-        @media (max-width: 991px) {
-            .hero h1 { font-size: 48px; }
-            .hero-image { display: none; }
-            .navbar-collapse { background: var(--white); padding: 20px; border-radius: 12px; margin-top: 10px; box-shadow: var(--shadow); }
+        /* Sidebar Mobile Menu */
+        .sidebar-overlay { 
+            display: none;
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            bottom: 0; 
+            background: rgba(0, 0, 0, 0.5); 
+            z-index: 1090;
+            transition: opacity 0.3s ease;
         }
 
+        .sidebar-overlay.active { display: block; opacity: 1; }
+
+
+        .sidebar { 
+            position: fixed; 
+            top: 0; 
+            right: -300px; 
+            width: 280px; 
+            height: 100vh; 
+            background: var(--white);
+            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+            z-index: 1100;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .sidebar.active { right: 0; }
+
+        body.sidebar-open {
+            overflow: hidden;
+        }
+
+        .sidebar-header { 
+            padding: 20px 16px;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sidebar-title { font-weight: 700; font-size: 18px; }
+
+        .sidebar-close { 
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--dark);
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-nav { 
+            flex: 1;
+            padding: 16px 0;
+            list-style: none;
+        }
+
+        .sidebar-nav li { margin: 0; }
+
+        .sidebar-nav a { 
+            display: block;
+            padding: 14px 16px;
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar-nav a:hover { 
+            background: var(--light-gray);
+            border-left-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .sidebar-controls { 
+            padding: 16px;
+            border-top: 1px solid var(--light-gray);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sidebar-control { 
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            background: var(--light-gray);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-control:hover { background: #e8e8e8; }
+
+        .lang-select { 
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--light-gray);
+            border-radius: 6px;
+            font-size: 14px;
+            background: var(--white);
+        }
+
+        .sidebar-buttons { 
+            padding: 16px;
+            border-top: 1px solid var(--light-gray);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .sidebar-buttons button { 
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-login-sidebar { 
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-login-sidebar:hover { background: var(--primary-dark); }
+
         @media (max-width: 768px) {
-            .hero h1 { font-size: 36px; }
-            .section-title { font-size: 32px; }
-            .hero-buttons { flex-direction: column; }
-            .hero-buttons .btn { width: 100%; text-align: center; }
-            .stat-number { font-size: 36px; }
-            .contact-form { padding: 24px; }
+            .navbar-collapse { 
+                display: none !important;
+            }
+
+            .navbar-toggler {
+                display: block !important;
+            }
+
+            .sidebar {
+                display: flex;
+            }
+
+            .sidebar-overlay {
+                display: none;
+            }
+
+            .hero h1 { font-size: 28px; line-height: 1.2; margin-bottom: 16px; }
+            .hero p { font-size: 14px; margin-bottom: 20px; }
+            .hero-buttons { flex-direction: column; gap: 10px; }
+            .hero-buttons .btn { width: 100%; padding: 12px 16px; font-size: 14px; }
+            .section-title { font-size: 24px; margin-bottom: 16px; }
+            .section-subtitle { font-size: 13px; margin-bottom: 24px; display: none; }
+            .hero { min-height: auto; padding: 30px 0; padding-top: 80px; }
+            .features, .jobs { padding: 40px 0; }
+            .contact-form { padding: 16px; }
+            .form-control-custom { padding: 10px 12px; margin-bottom: 8px; font-size: 14px; }
+            .feature-card, .testimonial-card { padding: 16px; margin-bottom: 12px; }
+            .feature-icon { width: 50px; height: 50px; font-size: 24px; margin-bottom: 8px; }
+            .job-card { padding: 12px; margin-bottom: 8px; }
+            .job-title { font-size: 16px; margin-bottom: 4px; }
+            .job-company { font-size: 12px; }
+            .job-salary { font-size: 16px; }
+            .job-location { font-size: 12px; }
+            .job-tags { gap: 4px; margin-bottom: 8px; }
+            .job-tag { font-size: 10px; padding: 2px 6px; }
+            .btn-primary-custom { padding: 10px 16px; font-size: 13px; }
+            .search-box { padding: 8px; flex-direction: column; }
+            .search-box input, .search-box button { min-width: 100%; }
+            .testimonials { display: none !important; }
+            .faq { display: none !important; }
+            .blog { display: none !important; }
+            .contact { display: none !important; }
+            .about { display: none !important; }
+            footer { padding: 20px 0 10px; font-size: 12px; }
+            .footer-brand { font-size: 16px; margin-bottom: 6px; }
+            .footer-text { display: none; }
+            .footer-title { font-size: 13px; margin-bottom: 8px; }
+            .footer-links li { margin-bottom: 6px; }
+            .footer-links a, .footer-links span { font-size: 12px; }
+            .social-links { gap: 8px; }
+            .social-links a { width: 32px; height: 32px; font-size: 14px; }
+            .footer-bottom { margin-top: 14px; padding-top: 10px; font-size: 10px; }
+            .navbar-brand { font-size: 18px; }
+            .nav-link { padding: 6px 10px !important; font-size: 12px; }
+            .theme-toggle, .lang-toggle { font-size: 16px; display: none !important; }
+        }
+
+        @media (min-width: 769px) {
+            .navbar-toggler {
+                display: none !important;
+            }
+
+            .collapse.navbar-collapse { 
+                display: flex !important;
+            }
+
+            .sidebar {
+                display: none !important;
+            }
+
+            .sidebar-overlay {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero { padding: 20px 0; padding-top: 70px; }
+            .hero h1 { font-size: 22px; line-height: 1.15; margin-bottom: 12px; }
+            .hero p { font-size: 13px; margin-bottom: 16px; }
+            .container { padding: 0 10px; }
+            .nav-link { padding: 4px 6px !important; font-size: 11px; }
+            .navbar { padding: 8px 0; }
+            .navbar-brand { font-size: 16px; padding: 0 8px; }
+            .section-title { font-size: 20px; margin-bottom: 12px; }
+            .features, .jobs { padding: 24px 0; }
+            .job-card { padding: 8px; margin-bottom: 6px; border-radius: 8px; }
+            .job-title { font-size: 14px; }
+            .job-salary { font-size: 14px; }
+            .btn-primary-custom { padding: 9px 14px; font-size: 12px; border-radius: 8px; }
+            .feature-card { padding: 12px; }
         }
     </style>
 </head>
@@ -595,7 +842,7 @@
     <nav class="navbar navbar-expand-lg navbar-light" id="navbar">
         <div class="container">
             <a class="navbar-brand" href="#" onclick="showPage('home')">Migrant<span>KZ</span></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" onclick="toggleSidebar()">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -627,7 +874,40 @@
         </div>
     </nav>
 
-    <!-- Home Page -->
+    <!-- Mobile Sidebar Menu -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="sidebar-title">Меню</span>
+            <button class="sidebar-close" onclick="closeSidebar()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+        <ul class="sidebar-nav">
+            <li><a href="#" onclick="showPage('home'); closeSidebar()" data-key="nav_home">Главная</a></li>
+            <li><a href="#" onclick="showPage('jobs'); closeSidebar()" data-key="nav_jobs">Вакансии</a></li>
+            <li><a href="#" onclick="showPage('blog'); closeSidebar()" data-key="nav_blog">Блог</a></li>
+            <li><a href="#" onclick="showPage('about'); closeSidebar()" data-key="nav_about">О нас</a></li>
+            <li id="sidebarDashboardLink" style="display: none;"><a href="#" onclick="showPage('dashboard'); closeSidebar()" data-key="nav_dashboard">Личный кабинет</a></li>
+        </ul>
+        <div class="sidebar-controls">
+            <div class="sidebar-control">
+                <span style="font-weight: 500; font-size: 14px;">🌍 Язык</span>
+            </div>
+            <select class="lang-select" onchange="setLanguage(this.value)">
+                <option value="ru">🇷🇺 Русский</option>
+                <option value="uz">🇺🇿 O'zbekcha</option>
+                <option value="tg">🇹🇯 Тоҷикӣ</option>
+            </select>
+            <div class="sidebar-control" onclick="toggleTheme()">
+                <span style="font-weight: 500; font-size: 14px;">🌙 Тёмная тема</span>
+                <i class="bi" id="themeIconSidebar"></i>
+            </div>
+        </div>
+        <div class="sidebar-buttons">
+            <button class="btn-login-sidebar" id="authBtnSidebar" onclick="handleSidebarAuth()">Войти в аккаунт</button>
+        </div>
+    </aside>
     <div id="home-page">
         <section class="hero" id="home">
             <div class="container">
@@ -635,7 +915,7 @@
                     <div class="col-lg-6">
                         <div class="hero-content">
                             <h1 data-key="hero_title">Работай безопасно в Казахстане</h1>
-                            <p data-key="hero_subtitle">Единая платформа для поиска работы и проверки работодателей. Защитите себя от мошенничества и найдите надежную работу.</p>
+                            <p data-key="hero_subtitle" style="display: none;">Единая платформа для поиска работы и проверки работодателей. Защитите себя от мошенничества и найдите надежную работу.</p>
                             <div class="hero-buttons">
                                 <button class="btn btn-primary-custom" onclick="showPage('jobs')" data-key="hero_find_job">Найти работу</button>
                                 <button class="btn btn-outline-custom" onclick="showPage('employer')" data-key="hero_check_company">Проверить компанию</button>
@@ -643,7 +923,7 @@
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <div class="hero-image">
+                        <div class="hero-image" style="display: none;">
                             <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="200" cy="200" r="180" fill="#E8F4FD"/>
                                 <circle cx="200" cy="200" r="140" fill="#2F80ED" fill-opacity="0.1"/>
@@ -659,18 +939,42 @@
             </div>
         </section>
 
-        <section class="stats">
+        <section class="features" style="background: var(--white); padding: 60px 0; display: none;">
             <div class="container">
+                <h2 class="section-title" style="margin-bottom: 50px;">Как это работает</h2>
                 <div class="row">
-                    <div class="col-3"><div class="stat-item"><div class="stat-number">10,000+</div><div class="stat-label" data-key="stat_jobs">Активных вакансий</div></div></div>
-                    <div class="col-3"><div class="stat-item"><div class="stat-number">5,000+</div><div class="stat-label" data-key="stat_companies">Проверенных компаний</div></div></div>
-                    <div class="col-3"><div class="stat-item"><div class="stat-number">50,000+</div><div class="stat-label" data-key="stat_employed">Соискателей трудоустроено</div></div></div>
-                    <div class="col-3"><div class="stat-item"><div class="stat-number">98%</div><div class="stat-label" data-key="stat_happy">Довольных пользователей</div></div></div>
+                    <div class="col-md-4">
+                        <div class="feature-card" style="text-align: center;">
+                            <div class="feature-icon" style="background: linear-gradient(135deg, #2F80ED 0%, #4a9df5 100%); width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center;">
+                                <span style="font-size: 40px;">1️⃣</span>
+                            </div>
+                            <h3 style="font-size: 22px; font-weight: 600; margin-bottom: 12px;">Найдите вакансию</h3>
+                            <p style="color: var(--gray); font-size: 15px;">Просмотрите тысячи актуальных вакансий в разных городах и сферах деятельности</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-card" style="text-align: center;">
+                            <div class="feature-icon" style="background: linear-gradient(135deg, #27AE60 0%, #3bb371 100%); width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center;">
+                                <span style="font-size: 40px;">2️⃣</span>
+                            </div>
+                            <h3 style="font-size: 22px; font-weight: 600; margin-bottom: 12px;">Проверьте компанию</h3>
+                            <p style="color: var(--gray); font-size: 15px;">Проверьте надежность работодателя перед тем, как откликнуться на вакансию</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-card" style="text-align: center;">
+                            <div class="feature-icon" style="background: linear-gradient(135deg, #F2994A 0%, #ffaa5a 100%); width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center;">
+                                <span style="font-size: 40px;">3️⃣</span>
+                            </div>
+                            <h3 style="font-size: 22px; font-weight: 600; margin-bottom: 12px;">Трудоустройтесь</h3>
+                            <p style="color: var(--gray); font-size: 15px;">Откликнитесь на вакансию и начните работу с надежным работодателем</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section class="features">
+        <section class="features" style="display: none;">
             <div class="container">
                 <h2 class="section-title" data-key="features_title">Почему выбирают нас</h2>
                 <p class="section-subtitle" data-key="features_subtitle">Мы помогаем мигрантам найти безопасную работу в Казахстане</p>
@@ -700,7 +1004,7 @@
             </div>
         </section>
 
-        <section class="jobs" id="jobs">
+        <section class="jobs" id="jobs" style="display: none;">
             <div class="container">
                 <h2 class="section-title" data-key="jobs_title">Актуальные вакансии</h2>
                 <p class="section-subtitle" data-key="jobs_subtitle">Найдите работу своей мечты</p>
@@ -1027,32 +1331,33 @@
                     <div class="dashboard-sidebar">
                         <h4 style="margin-bottom: 20px;" data-key="dashboard_title">Личный кабинет</h4>
                         <ul class="dashboard-menu">
-                            <li><a href="#" class="active" onclick="showDashboardTab('overview')"><i class="bi bi-house"></i> <span data-key="menu_overview">Обзор</span></a></li>
-                            <li><a href="#" onclick="showDashboardTab('applications')"><i class="bi bi-briefcase"></i> <span data-key="menu_applications">Мои отклики</span></a></li>
-                            <li><a href="#" onclick="showDashboardTab('resume')"><i class="bi bi-file-earmark-person"></i> <span data-key="menu_resume">Резюме</span></a></li>
+                            <li><a href="#" class="active" onclick="showDashboardTab('overview', event)"><i class="bi bi-house"></i> <span data-key="menu_overview">Обзор</span></a></li>
+                            <li><a href="#" onclick="showDashboardTab('applications', event)"><i class="bi bi-briefcase"></i> <span data-key="menu_applications">Мои отклики</span></a></li>
+                            <li><a href="#" onclick="showDashboardTab('resume', event)"><i class="bi bi-file-earmark-person"></i> <span data-key="menu_resume">Резюме</span></a></li>
+                            <li><a href="#" onclick="showDashboardTab('profile', event)"><i class="bi bi-gear"></i> <span data-key="menu_profile">Профиль</span></a></li>
                             <li><a href="#" onclick="logout()"><i class="bi bi-box-arrow-right"></i> <span data-key="menu_logout">Выход</span></a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-9">
                     <div id="dashboard-overview">
-                        <h2 id="userName" style="margin-bottom: 30px;" data-key="welcome">Добро пожаловать, Пользователь!</h2>
-                        <div class="row">
-                            <div class="col-md-4"><div class="dashboard-card"><div class="dashboard-stat"><div class="dashboard-stat-number">5</div><div class="dashboard-stat-label" data-key="stat_applications">Откликов</div></div></div></div>
-                            <div class="col-md-4"><div class="dashboard-card"><div class="dashboard-stat"><div class="dashboard-stat-number">2</div><div class="dashboard-stat-label" data-key="stat_invites">Приглашений</div></div></div></div>
-                            <div class="col-md-4"><div class="dashboard-card"><div class="dashboard-stat"><div class="dashboard-stat-number">3</div><div class="dashboard-stat-label" data-key="stat_favorites">Избранных</div></div></div></div>
+                        <div class="profile-header">
+                            <div class="profile-avatar-wrap">
+                                <img id="overviewAvatar" class="profile-avatar" alt="" style="display: none;">
+                                <div id="overviewAvatarPlaceholder" class="profile-avatar profile-avatar-placeholder"><i class="bi bi-person"></i></div>
+                            </div>
+                            <div>
+                                <h2 id="userName" style="margin-bottom: 8px;" data-key="welcome">Добро пожаловать!</h2>
+                                <p id="userEmail" class="dashboard-empty" style="padding: 0; margin: 0;"></p>
+                            </div>
+                        </div>
+                        <div class="dashboard-card">
+                            <p id="dashboardSummary" data-key="dashboard_summary">Здесь вы можете управлять резюме и отслеживать отклики на вакансии.</p>
                         </div>
                     </div>
                     <div id="dashboard-applications" style="display: none;">
                         <h2 style="margin-bottom: 30px;" data-key="my_applications">Мои отклики</h2>
-                        <div class="dashboard-card">
-                            <div class="job-card" style="border-left: 4px solid var(--secondary);">
-                                <div class="job-header">
-                                    <div><h5 class="job-title">Водитель-международник</h3><p class="job-company">ТОО "КазТрансЛогистик"</p></div>
-                                    <span class="company-status status-verified" data-key="status_pending">Рассматривается</span>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="dashboard-card" id="applicationsList"></div>
                     </div>
                     <div id="dashboard-resume" style="display: none;">
                         <h2 style="margin-bottom: 30px;" data-key="my_resume">Моё резюме</h2>
@@ -1067,9 +1372,44 @@
                             </div>
                             <div class="form-group">
                                 <label data-key="label_experience">Опыт работы</label>
-                                <textarea class="form-control-custom" placeholder="Опишите ваш опыт работы" data-key="placeholder_experience"></textarea>
+                                <textarea class="form-control-custom" id="resumeExperience" placeholder="Опишите ваш опыт работы" data-key="placeholder_experience"></textarea>
                             </div>
                             <button class="btn btn-primary-custom" onclick="saveResume()" data-key="btn_save_resume">Сохранить резюме</button>
+                        </div>
+                    </div>
+                    <div id="dashboard-profile" style="display: none;">
+                        <h2 style="margin-bottom: 30px;" data-key="profile_title">Профиль</h2>
+                        <div class="dashboard-card">
+                            <div class="profile-header">
+                                <div class="profile-avatar-wrap">
+                                    <img id="profileAvatar" class="profile-avatar" alt="" style="display: none;">
+                                    <div id="profileAvatarPlaceholder" class="profile-avatar profile-avatar-placeholder"><i class="bi bi-person"></i></div>
+                                </div>
+                                <div class="profile-avatar-actions">
+                                    <input type="file" id="avatarInput" accept="image/jpeg,image/png,image/webp" hidden>
+                                    <button type="button" class="btn btn-primary-custom btn-sm" onclick="document.getElementById('avatarInput').click()" data-key="btn_upload_avatar">Загрузить фото</button>
+                                    <button type="button" class="btn btn-outline-custom btn-sm" onclick="removeAvatar()" data-key="btn_remove_avatar">Удалить фото</button>
+                                    <p class="profile-hint" data-key="avatar_hint">JPG, PNG или WEBP, до 2 МБ</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label data-key="label_login">Логин (имя)</label>
+                                <input type="text" id="profileName" class="form-control-custom" placeholder="Ваше имя">
+                            </div>
+                            <div class="form-group">
+                                <label data-key="label_email">Email</label>
+                                <input type="email" id="profileEmail" class="form-control-custom" placeholder="example@mail.ru">
+                            </div>
+                            <div class="form-group">
+                                <label data-key="label_current_password">Текущий пароль</label>
+                                <input type="password" id="profileCurrentPassword" class="form-control-custom" placeholder="••••••••">
+                                <p class="form-hint" data-key="profile_password_hint">Нужен при смене email или пароля</p>
+                            </div>
+                            <div class="form-group">
+                                <label data-key="label_new_password">Новый пароль</label>
+                                <input type="password" id="profileNewPassword" class="form-control-custom" placeholder="Минимум 6 символов" data-key="placeholder_password_min">
+                            </div>
+                            <button class="btn btn-primary-custom" onclick="saveProfile()" data-key="btn_save_profile">Сохранить изменения</button>
                         </div>
                     </div>
                 </div>
@@ -1080,10 +1420,9 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="row">
-                <div class="col-lg-4">
+            <div class="row footer-row footer-compact">
+                <div class="col-lg-4 col-md-6 footer-col footer-col-small">
                     <div class="footer-brand">MigrantKZ</div>
-                    <p class="footer-text" data-key="footer_text">Единая платформа для безопасного поиска работы мигрантами в Казахстане.</p>
                     <div class="social-links">
                         <a href="#"><i class="bi bi-facebook"></i></a>
                         <a href="#"><i class="bi bi-instagram"></i></a>
@@ -1091,26 +1430,22 @@
                         <a href="#"><i class="bi bi-whatsapp"></i></a>
                     </div>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-4 col-md-6 footer-col footer-col-small">
                     <h5 class="footer-title" data-key="footer_nav">Навигация</h5>
                     <ul class="footer-links">
                         <li><a href="#" onclick="showPage('home')" data-key="nav_home">Главная</a></li>
                         <li><a href="#" onclick="showPage('jobs')" data-key="nav_jobs">Вакансии</a></li>
-                        <li><a href="#" onclick="showPage('blog')" data-key="nav_blog">Блог</a></li>
-                        <li><a href="#" onclick="showPage('about')" data-key="nav_about">О нас</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 col-md-12 footer-col footer-col-small">
                     <h5 class="footer-title" data-key="footer_contacts">Контакты</h5>
                     <ul class="footer-links">
-                        <li><i class="bi bi-geo-alt"></i> <span data-key="footer_address">г. Алматы, ул. Достык, 123</span></li>
                         <li><i class="bi bi-phone"></i> +7 777 123 4567</li>
-                        <li><i class="bi bi-envelope"></i> info@migrantkz.kz</li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p data-key="footer_copyright">© 2026 MigrantKZ. Все права защищены.</p>
+                <p data-key="footer_copyright">© 2026 MigrantKZ</p>
             </div>
         </div>
     </footer>
@@ -1167,10 +1502,12 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/migrantkz-api.js"></script>
     <script>
         let isLoggedIn = false;
         let currentUser = null;
         let currentLang = 'ru';
+        let pendingAvatar = undefined;
         const SHARED_DATA_KEY = 'migrantkz_shared_data_v1';
         const SHARED_UPDATE_CHANNEL = 'migrantkz_shared_data_channel';
         const broadcastChannel = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel(SHARED_UPDATE_CHANNEL) : null;
@@ -1210,13 +1547,16 @@
                 btn_read: 'Читать',
                 about_title: 'О нас', about_subtitle: 'Мы помогаем мигрантам найти безопасную работу',
                 about_team: 'Команда', about_mission: 'Миссия', about_goal: 'Цель',
-                dashboard_title: 'Личный кабинет', menu_overview: 'Обзор', menu_applications: 'Мои отклики', menu_resume: 'Резюме', menu_settings: 'Настройки', menu_logout: 'Выход',
-                welcome: 'Добро пожаловать,', stat_applications: 'Откликов', stat_invites: 'Приглашений', stat_favorites: 'Избранных',
-                my_applications: 'Мои отклики', status_pending: 'Рассматривается',
+                dashboard_title: 'Личный кабинет', menu_overview: 'Обзор', menu_applications: 'Мои отклики', menu_resume: 'Резюме', menu_profile: 'Профиль', menu_logout: 'Выход',
+                welcome: 'Добро пожаловать', dashboard_summary: 'Здесь вы можете управлять резюме и отслеживать отклики на вакансии.',
+                profile_title: 'Профиль', label_login: 'Логин (имя)', label_current_password: 'Текущий пароль', label_new_password: 'Новый пароль',
+                profile_password_hint: 'Нужен при смене email или пароля', placeholder_password_min: 'Минимум 6 символов',
+                btn_upload_avatar: 'Загрузить фото', btn_remove_avatar: 'Удалить фото', btn_save_profile: 'Сохранить изменения',
+                avatar_hint: 'JPG, PNG или WEBP, до 2 МБ',
+                my_applications: 'Мои отклики', status_pending: 'Рассматривается', no_applications: 'У вас пока нет откликов. Перейдите в раздел «Вакансии».',
                 my_resume: 'Моё резюме', label_name: 'Имя', label_profession: 'Профессия', label_experience: 'Опыт работы', btn_save_resume: 'Сохранить резюме',
-                settings_title: 'Настройки', label_language: 'Язык интерфейса', btn_save_settings: 'Сохранить',
                 footer_nav: 'Навигация', footer_contacts: 'Контакты',
-                tab_login: 'Вход', tab_register: 'Регистрация',
+                tab_login: 'Вход', tab_register: 'Регистрация', nav_dashboard: 'Личный кабинет',
                 login_title: 'С возвращением!', login_subtitle: 'Войдите в свой аккаунт', label_email: 'Email', label_password: 'Пароль', btn_login: 'Войти',
                 register_title: 'Создать аккаунт', register_subtitle: 'Присоединяйтесь к нам', btn_register: 'Регистрация'
             },
@@ -1251,13 +1591,12 @@
                 btn_read: 'Хондан',
                 about_title: 'Biz haqimizда', about_subtitle: 'Мо ба муҳоҷирон кӯмак мекунем корҳои бехатар пайдо кунанд',
                 about_team: 'Даста', about_mission: 'Миссия', about_goal: 'Мақсад',
-                dashboard_title: 'Кабинети шахсӣ', menu_overview: 'Шарҳ', menu_applications: 'Аризаҳои ман', menu_resume: 'Резюме', menu_settings: 'Танзимот', menu_logout: 'Баромад',
-                welcome: 'Хуш омадед,', stat_applications: 'Аризаҳо', stat_invites: 'Даъватномаҳо', stat_favorites: 'Дӯстдошта',
-                my_applications: 'Аризаҳои ман', status_pending: 'Дар баррасӣ',
-                my_resume: 'Резюмеи ман', label_name: 'Ном', label_profession: 'Касб', label_experience: 'Таҷрибаи кор', btn_save_resume: 'Резюмеро нигоҳ доштан',
-                settings_title: 'Танзимот', label_language: 'Забони интерфейс', btn_save_settings: 'Нигоҳ доштан',
+                dashboard_title: 'Shaxsiy kabinet', menu_overview: 'Sharh', menu_applications: 'Mening arizalarim', menu_resume: 'Rezyume', menu_logout: 'Chiqish',
+                welcome: 'Xush kelibsiz', dashboard_summary: 'Bu yerda rezyumeni boshqarishingiz va arizalarni kuzatishingiz mumkin.',
+                my_applications: 'Mening arizalarim', status_pending: 'Ko\'rib chiqilmoqda', no_applications: 'Hozircha arizalar yo\'q. «Vakansiyalar» bo\'limiga o\'ting.',
+                my_resume: 'Mening rezyumem', label_name: 'Ism', label_profession: 'Kasb', label_experience: 'Ish tajribasi', btn_save_resume: 'Rezyumeni saqlash',
                 footer_nav: 'Навигатсия', footer_contacts: 'Тамосҳо',
-                tab_login: 'Kirish', tab_register: 'Ба қайд гузаштан',
+                tab_login: 'Kirish', tab_register: 'Ба қайд гузаштан', nav_dashboard: 'Shaxsiy kabinet',
                 login_title: 'Бозгаштан!', login_subtitle: 'Ба ҳисоби худ воред', label_email: 'Email', label_password: 'Парол', btn_login: 'Kirish',
                 register_title: 'Ҳисоб эҷод кунед', register_subtitle: 'Ба мо ҳамроҳ шавед', btn_register: 'Ба қайд гузаштан'
             },
@@ -1292,13 +1631,12 @@
                 btn_read: 'Хондан',
                 about_title: 'Дар бораи мо', about_subtitle: 'Мо ба муҳоҷирон кӯмак мекунем корҳои бехатар пайдо кунанд',
                 about_team: 'Даста', about_mission: 'Миссия', about_goal: 'Мақсад',
-                dashboard_title: 'Кабинети шахсӣ', menu_overview: 'Шарҳ', menu_applications: 'Аризаҳои ман', menu_resume: 'Резюме', menu_settings: 'Танзимот', menu_logout: 'Баромад',
-                welcome: 'Хуш омадед,', stat_applications: 'Аризаҳо', stat_invites: 'Даъватномаҳо', stat_favorites: 'Дӯстдошта',
-                my_applications: 'Аризаҳои ман', status_pending: 'Дар баррасӣ',
+                dashboard_title: 'Кабинети шахсӣ', menu_overview: 'Шарҳ', menu_applications: 'Аризаҳои ман', menu_resume: 'Резюме', menu_logout: 'Баромад',
+                welcome: 'Хуш омадед', dashboard_summary: 'Ин ҷо шумо метавонед резюме идора кунед ва аризаҳои ҷойҳои корро пайгирӣ кунед.',
+                my_applications: 'Аризаҳои ман', status_pending: 'Дар баррасӣ', no_applications: 'Ҳоло ариза нест. Ба бахши «Ҷойҳои корӣ» гузаред.',
                 my_resume: 'Резюмеи ман', label_name: 'Ном', label_profession: 'Касб', label_experience: 'Таҷрибаи кор', btn_save_resume: 'Резюмеро нигоҳ доштан',
-                settings_title: 'Танзимот', label_language: 'Забони интерфейс', btn_save_settings: 'Нигоҳ доштан',
                 footer_nav: 'Навигатсия', footer_contacts: 'Тамосҳо',
-                tab_login: 'Вуруд', tab_register: 'Ба қайд гузаштан',
+                tab_login: 'Вуруд', tab_register: 'Ба қайд гузаштан', nav_dashboard: 'Кабинети шахсӣ',
                 login_title: 'Бозгаштан!', login_subtitle: 'Ба ҳисоби худ воред', label_email: 'Email', label_password: 'Парол', btn_login: 'Вуруд',
                 register_title: 'Ҳисоб эҷод кунед', register_subtitle: 'Ба мо ҳамроҳ шавед', btn_register: 'Ба қайд гузаштан'
             },
@@ -1315,6 +1653,16 @@
             placeholder_experience: 'Опишите ваш опыт работы',
             alert_fill_fields: 'Пожалуйста, заполните все поля',
             alert_fill_required: 'Пожалуйста, заполните все обязательные поля',
+            alert_user_not_found: 'Пользователь не найден. Зарегистрируйтесь.',
+            alert_user_exists: 'Пользователь с таким email уже зарегистрирован.',
+            alert_wrong_password: 'Неверный пароль.',
+            alert_invalid_email: 'Введите корректный email, например: example@mail.ru',
+            alert_invalid_password: 'Пароль должен содержать минимум 6 символов.',
+            alert_current_password_required: 'Введите текущий пароль для смены email или пароля.',
+            alert_profile_saved: 'Профиль сохранён!',
+            alert_storage_failed: 'Не удалось сохранить данные. Попробуйте фото меньшего размера.',
+            alert_avatar_too_large: 'Файл слишком большой. Выберите фото до 2 МБ.',
+            alert_avatar_invalid: 'Можно загрузить только изображение (JPG, PNG, WEBP).',
             alert_resume_saved: 'Резюме сохранено!',
             alert_settings_saved: 'Настройки сохранены!',
             alert_apply_sent_prefix: 'Ваш отклик на вакансию "',
@@ -1334,6 +1682,16 @@
             placeholder_experience: 'Ish tajribangizни тавсиф кунед',
             alert_fill_fields: 'Iltimos, barcha maydonlarni to\'ldiring',
             alert_fill_required: 'Iltimos, barcha majburiy maydonlarni to\'ldiring',
+            alert_user_not_found: 'Foydalanuvchi topilmadi. Ro\'yxatdan o\'ting.',
+            alert_user_exists: 'Bunday email bilan foydalanuvchi allaqachon mavjud.',
+            alert_wrong_password: 'Noto\'g\'ri parol.',
+            alert_invalid_email: 'To\'g\'ri email kiriting, masalan: example@mail.ru',
+            alert_invalid_password: 'Parol kamida 6 ta belgidan iborat bo\'lishi kerak.',
+            alert_current_password_required: 'Email yoki parolni o\'zgartirish uchun joriy parolni kiriting.',
+            alert_storage_failed: 'Ma\'lumotlarni saqlab bo\'lmadi. Kichikroq rasm sinab ko\'ring.',
+            alert_profile_saved: 'Profil saqlandi!',
+            alert_avatar_too_large: 'Fayl juda katta. 2 MB gacha rasm tanlang.',
+            alert_avatar_invalid: 'Faqat rasm yuklash mumkin (JPG, PNG, WEBP).',
             alert_resume_saved: 'Rezyume saqlandi!',
             alert_settings_saved: 'Sozlamalar saqlandi!',
             alert_apply_sent_prefix: 'Аризаи шумо ба ҷойи кори "',
@@ -1353,6 +1711,16 @@
             placeholder_experience: 'Таҷрибаи кори худро тавсиф кунед',
             alert_fill_fields: 'Лутфан, ҳамаи майдонҳоро пур кунед',
             alert_fill_required: 'Лутфан, ҳамаи майдонҳои ҳатмиро пур кунед',
+            alert_user_not_found: 'Корбар ёфт нашуд. Ба қайд гузаред.',
+            alert_user_exists: 'Корбар бо ин email аллакай мавҷуд аст.',
+            alert_wrong_password: 'Пароли нодуруст.',
+            alert_invalid_email: 'Email-и дурустро ворид кунед, масалан: example@mail.ru',
+            alert_invalid_password: 'Парол бояд ҳадди ақал 6 аломат дошта бошад.',
+            alert_current_password_required: 'Барои иваз кардани email ё парол пароли ҷориро ворид кунед.',
+            alert_profile_saved: 'Профил нигоҳ дошта шуд!',
+            alert_storage_failed: 'Нигоҳ доштан муваффақ нашуд. Акси хурдтарро интихоб кунед.',
+            alert_avatar_too_large: 'Файл хеле калон аст. Акси то 2 МБ интихоб кунед.',
+            alert_avatar_invalid: 'Танҳо акс бор кардан мумкин аст (JPG, PNG, WEBP).',
             alert_resume_saved: 'Резюме нигоҳ дошта шуд!',
             alert_settings_saved: 'Танзимот нигоҳ дошта шуд!',
             alert_apply_sent_prefix: 'Аризаи шумо ба ҷойи кори "',
@@ -1453,6 +1821,16 @@
         }
 
         function getSharedData() {
+            if (window.MigrantKZApi && MigrantKZApi.normalizeData) {
+                const local = localStorage.getItem(SHARED_DATA_KEY);
+                if (local) {
+                    try {
+                        return MigrantKZApi.normalizeData(JSON.parse(local));
+                    } catch (error) {
+                        return null;
+                    }
+                }
+            }
             const raw = localStorage.getItem(SHARED_DATA_KEY);
             if (!raw) return null;
             try {
@@ -1461,11 +1839,47 @@
                     jobs: Array.isArray(parsed.jobs) ? parsed.jobs : [],
                     employers: Array.isArray(parsed.employers) ? parsed.employers : [],
                     reviews: Array.isArray(parsed.reviews) ? parsed.reviews : [],
-                    faq: Array.isArray(parsed.faq) ? parsed.faq : []
+                    faq: Array.isArray(parsed.faq) ? parsed.faq : [],
+                    users: Array.isArray(parsed.users) ? parsed.users : []
                 };
             } catch (error) {
                 return null;
             }
+        }
+
+        async function ensureSharedDataLoaded(forceReload) {
+            if (window.MigrantKZApi) {
+                return MigrantKZApi.loadData(!!forceReload);
+            }
+            return getSharedData();
+        }
+
+        function saveSharedData(data) {
+            if (window.MigrantKZApi) {
+                return MigrantKZApi.saveData(data);
+            }
+            try {
+                localStorage.setItem(SHARED_DATA_KEY, JSON.stringify(data));
+                localStorage.setItem(SHARED_DATA_KEY + '_updated', Date.now().toString());
+                if (broadcastChannel) {
+                    broadcastChannel.postMessage({ type: 'shared-data-updated' });
+                }
+            } catch (error) {
+                console.warn('Не удалось сохранить данные SharedData', error);
+            }
+        }
+
+        function findSharedUserByEmail(email) {
+            const shared = getSharedData();
+            if (!shared) return null;
+            return shared.users.find((user) => String(user.email || '').toLowerCase() === String(email || '').toLowerCase()) || null;
+        }
+
+        function getCurrentUserRecord() {
+            if (!currentUser?.id) return findSharedUserByEmail(currentUser?.email);
+            const shared = getSharedData();
+            if (!shared) return null;
+            return shared.users.find((user) => Number(user.id) === Number(currentUser.id)) || findSharedUserByEmail(currentUser.email);
         }
 
         function renderJobCard(card, job) {
@@ -1521,16 +1935,13 @@
         function renderFaqItems(faqItems) {
             const accordion = document.getElementById('faqAccordion');
             if (!accordion) return;
-            console.log('renderFaqItems called with:', faqItems);
             const html = faqItems.map((item) => `
                 <div class="faq-item">
                     <h3>${escapeHtml(item.question)}</h3>
                     <p>${escapeHtml(item.answer)}</p>
                 </div>
             `).join('');
-            console.log('Generated HTML:', html);
             accordion.innerHTML = html;
-            console.log('accordion.innerHTML set, current:', accordion.innerHTML);
         }
 
         function updateFaqSection() {
@@ -1548,7 +1959,6 @@
                 return;
             }
             const faq = Array.isArray(parsed.faq) ? parsed.faq : [];
-            console.log('updateFaqSection: faq array =', faq);
             if (!faq.length) {
                 restoreDefaultFaq();
                 return;
@@ -1735,13 +2145,6 @@
                 if (blogDates[index]) blogDates[index].textContent = date;
             });
 
-            const dashboardCard = document.querySelector('#dashboard-applications .job-card');
-            if (dashboardCard) {
-                const titleEl = dashboardCard.querySelector('.job-title');
-                const companyEl = dashboardCard.querySelector('.job-company');
-                if (titleEl) titleEl.textContent = data.jobs[0].title;
-                if (companyEl) companyEl.textContent = data.jobs[0].company;
-            }
 
             const citySelects = [document.getElementById('homeFilterCity'), document.getElementById('filterCity')].filter(Boolean);
             citySelects.forEach((select) => {
@@ -1804,8 +2207,105 @@
         }
 
         function getWelcomeText(name) {
-            const prefix = (translations[currentLang]?.welcome || 'Добро пожаловать,').replace(/\s*,$/, '');
-            return name ? `${prefix}, ${name}!` : prefix;
+            const prefix = translations[currentLang]?.welcome || 'Добро пожаловать';
+            return name ? `${prefix}, ${name}!` : `${prefix}!`;
+        }
+
+        function clearAuthForms() {
+            ['loginEmail', 'loginPassword', 'registerName', 'registerEmail', 'registerPassword'].forEach((id) => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+        }
+
+        async function restoreSession() {
+            const savedUser = localStorage.getItem('user');
+            if (!savedUser) {
+                isLoggedIn = false;
+                currentUser = null;
+                return;
+            }
+            try {
+                currentUser = JSON.parse(savedUser);
+                if (!currentUser?.email) {
+                    throw new Error('invalid session');
+                }
+                isLoggedIn = true;
+                await ensureSharedDataLoaded(true);
+                const userRecord = getCurrentUserRecord();
+                if (userRecord) {
+                    currentUser.id = userRecord.id;
+                    currentUser.name = userRecord.name || currentUser.name;
+                    currentUser.email = userRecord.email || currentUser.email;
+                    currentUser.avatar = userRecord.avatar || currentUser.avatar || '';
+                    localStorage.setItem('user', JSON.stringify(currentUser));
+                }
+                await refreshDashboard();
+            } catch (error) {
+                localStorage.removeItem('user');
+                currentUser = null;
+                isLoggedIn = false;
+            }
+        }
+
+        function handleSidebarAuth() {
+            if (isLoggedIn) {
+                showPage('dashboard');
+            } else {
+                showModal('login');
+            }
+            closeSidebar();
+        }
+
+        async function refreshDashboard() {
+            if (!isLoggedIn || !currentUser) return;
+            await ensureSharedDataLoaded(false);
+            const userRecord = getCurrentUserRecord();
+            const displayName = currentUser.name || userRecord?.name || '';
+            const displayEmail = currentUser.email || userRecord?.email || '';
+            const avatarUrl = currentUser.avatar
+                || (window.MigrantKZApi ? MigrantKZApi.getAvatarFromStorage(currentUser.id) : '')
+                || userRecord?.avatar
+                || '';
+
+            const userNameEl = document.getElementById('userName');
+            const userEmailEl = document.getElementById('userEmail');
+            if (userNameEl) userNameEl.textContent = getWelcomeText(displayName);
+            if (userEmailEl) userEmailEl.textContent = displayEmail;
+
+            setAvatarPreview(avatarUrl);
+
+            const profileName = document.getElementById('profileName');
+            const profileEmail = document.getElementById('profileEmail');
+            if (profileName) profileName.value = displayName;
+            if (profileEmail) profileEmail.value = displayEmail;
+
+            const resume = userRecord?.resume || {};
+            const resumeName = document.getElementById('resumeName');
+            const resumeProfession = document.getElementById('resumeProfession');
+            const resumeExperience = document.getElementById('resumeExperience');
+            if (resumeName) resumeName.value = resume.name || currentUser.name || '';
+            if (resumeProfession) resumeProfession.value = resume.profession || '';
+            if (resumeExperience) resumeExperience.value = resume.experience || '';
+
+            const applicationsList = document.getElementById('applicationsList');
+            const applications = Array.isArray(userRecord?.applications) ? userRecord.applications : [];
+            if (!applicationsList) return;
+            if (!applications.length) {
+                applicationsList.innerHTML = `<p class="dashboard-empty">${t('no_applications', 'У вас пока нет откликов.')}</p>`;
+                return;
+            }
+            applicationsList.innerHTML = applications.map((item) => `
+                <div class="job-card" style="border-left: 4px solid var(--secondary); margin-bottom: 12px;">
+                    <div class="job-header">
+                        <div>
+                            <h5 class="job-title">${escapeHtml(item.title || '')}</h5>
+                            <p class="job-company">${escapeHtml(item.company || '')}</p>
+                        </div>
+                        <span class="company-status status-verified">${escapeHtml(item.date || t('status_pending', 'Рассматривается'))}</span>
+                    </div>
+                </div>
+            `).join('');
         }
 
         function toggleLangDropdown() {
@@ -1827,9 +2327,15 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(() => { document.getElementById('loader').classList.add('hidden'); }, 2000);
-            
+        function hideLoader() {
+            const loader = document.getElementById('loader');
+            if (loader) loader.classList.add('hidden');
+        }
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            setTimeout(hideLoader, 1500);
+
+            try {
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'dark') {
                 document.documentElement.setAttribute('data-theme', 'dark');
@@ -1837,8 +2343,11 @@
                 document.getElementById('themeIcon').classList.add('bi-sun-fill');
             }
 
-            lastSharedDataJson = '';
+            await ensureSharedDataLoaded(true);
+            lastSharedDataJson = localStorage.getItem(SHARED_DATA_KEY) || '';
             refreshSharedDataFromStorage(true);
+
+            await restoreSession();
 
             const savedLang = localStorage.getItem('language');
             if (savedLang) {
@@ -1856,15 +2365,6 @@
                 };
             }
 
-            const savedUser = localStorage.getItem('user');
-            if (savedUser) {
-                currentUser = JSON.parse(savedUser);
-                isLoggedIn = true;
-                updateAuthButton();
-                const userNameEl = document.getElementById('userName');
-                if (userNameEl) userNameEl.textContent = getWelcomeText(currentUser?.name);
-            }
-
             const jobsContainer = document.querySelector('#jobs-page .col-lg-9');
             if (jobsContainer) {
                 jobsPageBaseJobCardsCount = jobsContainer.querySelectorAll('> .job-card').length;
@@ -1879,21 +2379,59 @@
             const homeFilterCategoryEl = document.getElementById('homeFilterCategory');
             if (homeFilterCityEl) homeFilterCityEl.addEventListener('change', applyHomeFilters);
             if (homeFilterCategoryEl) homeFilterCategoryEl.addEventListener('change', applyHomeFilters);
+
+            const avatarInput = document.getElementById('avatarInput');
+            if (avatarInput) avatarInput.addEventListener('change', handleAvatarSelect);
+            } catch (error) {
+                console.error('Ошибка инициализации сайта:', error);
+            } finally {
+                hideLoader();
+            }
         });
 
         function toggleTheme() {
             const html = document.documentElement;
             const icon = document.getElementById('themeIcon');
+            const iconSidebar = document.getElementById('themeIconSidebar');
             if (html.getAttribute('data-theme') === 'dark') {
                 html.removeAttribute('data-theme');
-                icon.classList.remove('bi-sun-fill');
-                icon.classList.add('bi-moon-fill');
+                if (icon) icon.classList.remove('bi-sun-fill'); 
+                if (icon) icon.classList.add('bi-moon-fill');
+                if (iconSidebar) iconSidebar.classList.remove('bi-sun-fill');
+                if (iconSidebar) iconSidebar.classList.add('bi-moon-fill');
                 localStorage.setItem('theme', 'light');
             } else {
                 html.setAttribute('data-theme', 'dark');
-                icon.classList.remove('bi-moon-fill');
-                icon.classList.add('bi-sun-fill');
+                if (icon) icon.classList.remove('bi-moon-fill');
+                if (icon) icon.classList.add('bi-sun-fill');
+                if (iconSidebar) iconSidebar.classList.remove('bi-moon-fill');
+                if (iconSidebar) iconSidebar.classList.add('bi-sun-fill');
                 localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        function openSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            if (sidebar) sidebar.classList.add('active');
+            if (overlay) overlay.classList.add('active');
+            document.body.classList.add('sidebar-open');
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            if (sidebar) sidebar.classList.remove('active');
+            if (overlay) overlay.classList.remove('active');
+            document.body.classList.remove('sidebar-open');
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar && sidebar.classList.contains('active')) {
+                closeSidebar();
+            } else {
+                openSidebar();
             }
         }
 
@@ -1910,11 +2448,18 @@
             else if (page === 'about') { document.getElementById('about-page').style.display = 'block'; window.scrollTo(0, 0); }
             else if (page === 'employer') { document.getElementById('home-page').style.display = 'block'; window.scrollTo({ top: document.getElementById('employer').offsetTop - 80, behavior: 'smooth' }); }
             else if (page === 'contact') { document.getElementById('home-page').style.display = 'block'; window.scrollTo(0, document.getElementById('contact').offsetTop - 100); }
-            else if (page === 'dashboard') { document.getElementById('dashboard-page').classList.add('active'); window.scrollTo(0, 0); }
+            else if (page === 'dashboard') {
+                if (!isLoggedIn) { showModal('login'); return; }
+                document.getElementById('dashboard-page').classList.add('active');
+                refreshDashboard();
+                showDashboardTab('overview');
+                window.scrollTo(0, 0);
+            }
+            updateAuthButton();
         }
 
         function showModal(type) { document.getElementById('modal').classList.add('active'); if (type === 'login') switchTab('login'); else switchTab('register'); }
-        function closeModal() { document.getElementById('modal').classList.remove('active'); }
+        function closeModal() { document.getElementById('modal').classList.remove('active'); clearAuthForms(); }
 
         function switchTab(tab) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -1927,35 +2472,214 @@
             return translations[currentLang]?.[key] || fallback;
         }
 
-        function login() {
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            if (email && password) {
-                currentUser = { name: 'Пользователь', email: email };
-                isLoggedIn = true;
-                localStorage.setItem('user', JSON.stringify(currentUser));
-                updateAuthButton();
-                closeModal();
-                showPage('dashboard');
-                const userNameEl = document.getElementById('userName');
-                if (userNameEl) userNameEl.textContent = getWelcomeText(currentUser.name);
-            } else { alert(t('alert_fill_fields', 'Пожалуйста, заполните все поля')); }
+        function showAuthError(error) {
+            const messages = {
+                fill_fields: t('alert_fill_fields', 'Пожалуйста, заполните все поля'),
+                fill_required: t('alert_fill_required', 'Пожалуйста, заполните все обязательные поля'),
+                invalid_email: t('alert_invalid_email', 'Введите корректный email'),
+                invalid_password: t('alert_invalid_password', 'Пароль должен содержать минимум 6 символов'),
+                user_not_found: t('alert_user_not_found', 'Пользователь не найден'),
+                user_exists: t('alert_user_exists', 'Пользователь с таким email уже зарегистрирован'),
+                wrong_password: t('alert_wrong_password', 'Неверный пароль'),
+                current_password_required: t('alert_current_password_required', 'Введите текущий пароль'),
+                storage_failed: t('alert_storage_failed', 'Не удалось сохранить данные. Попробуйте фото меньшего размера.'),
+                avatar_storage_failed: t('alert_storage_failed', 'Не удалось сохранить фото. Попробуйте другое изображение.')
+            };
+            alert(messages[error] || t('alert_fill_required', 'Пожалуйста, заполните все обязательные поля'));
         }
 
-        function register() {
-            const name = document.getElementById('registerName').value;
-            const email = document.getElementById('registerEmail').value;
-            const password = document.getElementById('registerPassword').value;
-            if (name && email && password) {
-                currentUser = { name: name, email: email };
-                isLoggedIn = true;
+        function setAvatarPreview(avatarUrl) {
+            const pairs = [
+                ['overviewAvatar', 'overviewAvatarPlaceholder'],
+                ['profileAvatar', 'profileAvatarPlaceholder']
+            ];
+            pairs.forEach(([imgId, placeholderId]) => {
+                const img = document.getElementById(imgId);
+                const placeholder = document.getElementById(placeholderId);
+                if (!img || !placeholder) return;
+                if (avatarUrl) {
+                    img.src = avatarUrl;
+                    img.style.display = 'block';
+                    placeholder.style.display = 'none';
+                } else {
+                    img.removeAttribute('src');
+                    img.style.display = 'none';
+                    placeholder.style.display = 'flex';
+                }
+            });
+        }
+
+        function compressImage(file, maxSize = 180, quality = 0.82) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const image = new Image();
+                    image.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        let width = image.width;
+                        let height = image.height;
+                        if (width > height && width > maxSize) {
+                            height = Math.round((height * maxSize) / width);
+                            width = maxSize;
+                        } else if (height > maxSize) {
+                            width = Math.round((width * maxSize) / height);
+                            height = maxSize;
+                        }
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(image, 0, 0, width, height);
+                        resolve(canvas.toDataURL('image/jpeg', quality));
+                    };
+                    image.onerror = () => reject(new Error('image_load_failed'));
+                    image.src = event.target.result;
+                };
+                reader.onerror = () => reject(new Error('file_read_failed'));
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function handleAvatarSelect(event) {
+            const file = event.target.files && event.target.files[0];
+            if (!file) return;
+            if (!/^image\/(jpeg|png|webp)$/i.test(file.type)) {
+                alert(t('alert_avatar_invalid', 'Можно загрузить только изображение'));
+                event.target.value = '';
+                return;
+            }
+            if (file.size > 2 * 1024 * 1024) {
+                alert(t('alert_avatar_too_large', 'Файл слишком большой'));
+                event.target.value = '';
+                return;
+            }
+            try {
+                const dataUrl = await compressImage(file);
+                pendingAvatar = dataUrl;
+                setAvatarPreview(dataUrl);
+            } catch (error) {
+                alert(t('alert_avatar_invalid', 'Можно загрузить только изображение'));
+            }
+            event.target.value = '';
+        }
+
+        function removeAvatar() {
+            pendingAvatar = '';
+            setAvatarPreview('');
+        }
+
+        async function saveProfile() {
+            if (!isLoggedIn || !currentUser?.id) {
+                showModal('login');
+                return;
+            }
+
+            const name = document.getElementById('profileName')?.value.trim() || '';
+            const email = document.getElementById('profileEmail')?.value.trim() || '';
+            const currentPassword = document.getElementById('profileCurrentPassword')?.value || '';
+            const newPassword = document.getElementById('profileNewPassword')?.value || '';
+
+            if (!name) {
+                showAuthError('fill_required');
+                return;
+            }
+            if (!MigrantKZApi.isValidEmail(email)) {
+                showAuthError('invalid_email');
+                return;
+            }
+            if (newPassword && !MigrantKZApi.isValidPassword(newPassword)) {
+                showAuthError('invalid_password');
+                return;
+            }
+
+            const userRecord = getCurrentUserRecord();
+            const emailChanged = email.toLowerCase() !== String(currentUser.email || '').toLowerCase();
+            if ((emailChanged || newPassword) && !currentPassword) {
+                showAuthError('current_password_required');
+                return;
+            }
+
+            const profilePayload = {
+                name,
+                email,
+                currentPassword,
+                newPassword,
+                lookupEmail: currentUser.email
+            };
+            if (pendingAvatar !== undefined) {
+                profilePayload.avatar = pendingAvatar;
+            }
+
+            try {
+                const result = await MigrantKZApi.updateProfile(currentUser.id, profilePayload);
+                if (!result.ok) {
+                    showAuthError(result.error);
+                    return;
+                }
+
+                currentUser = result.user;
                 localStorage.setItem('user', JSON.stringify(currentUser));
+                pendingAvatar = undefined;
+                document.getElementById('profileCurrentPassword').value = '';
+                document.getElementById('profileNewPassword').value = '';
+                if (window.MigrantKZApi) MigrantKZApi.invalidateCache();
                 updateAuthButton();
-                closeModal();
-                showPage('dashboard');
-                const userNameEl = document.getElementById('userName');
-                if (userNameEl) userNameEl.textContent = getWelcomeText(name);
-            } else { alert(t('alert_fill_required', 'Пожалуйста, заполните все обязательные поля')); }
+                await refreshDashboard();
+                alert(t('alert_profile_saved', 'Профиль сохранён!'));
+            } catch (error) {
+                showAuthError(error.message === 'avatar_storage_failed' ? 'avatar_storage_failed' : 'storage_failed');
+            }
+        }
+
+        async function login() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            if (!email || !password) {
+                showAuthError('fill_fields');
+                return;
+            }
+            if (!MigrantKZApi.isValidEmail(email)) {
+                showAuthError('invalid_email');
+                return;
+            }
+
+            const result = await MigrantKZApi.login(email, password);
+            if (!result.ok) {
+                showAuthError(result.error);
+                return;
+            }
+
+            currentUser = result.user;
+            isLoggedIn = true;
+            localStorage.setItem('user', JSON.stringify(currentUser));
+            updateAuthButton();
+            closeModal();
+            await refreshDashboard();
+            showPage('dashboard');
+        }
+
+        async function register() {
+            const name = document.getElementById('registerName').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const password = document.getElementById('registerPassword').value;
+            const validation = MigrantKZApi.validateRegistration({ name, email, password });
+            if (!validation.ok) {
+                showAuthError(validation.error);
+                return;
+            }
+
+            const result = await MigrantKZApi.register({ name, email, password });
+            if (!result.ok) {
+                showAuthError(result.error);
+                return;
+            }
+
+            currentUser = result.user;
+            isLoggedIn = true;
+            localStorage.setItem('user', JSON.stringify(currentUser));
+            updateAuthButton();
+            closeModal();
+            await refreshDashboard();
+            showPage('dashboard');
         }
 
         function logout() {
@@ -1968,32 +2692,88 @@
 
         function updateAuthButton() {
             const authBtn = document.getElementById('authBtn');
+            const authBtnSidebar = document.getElementById('authBtnSidebar');
+            const sidebarDashboardLink = document.getElementById('sidebarDashboardLink');
+            const loginLabel = translations[currentLang]?.tab_login || 'Вход';
+            const cabinetLabel = translations[currentLang]?.nav_dashboard || 'Личный кабинет';
+
             if (isLoggedIn) {
-                authBtn.innerHTML = '<i class="bi bi-person"></i>';
-                authBtn.onclick = function() { showPage('dashboard'); };
+                if (authBtn) {
+                    authBtn.innerHTML = '<i class="bi bi-person"></i>';
+                    authBtn.title = cabinetLabel;
+                    authBtn.onclick = function() { showPage('dashboard'); };
+                }
+                if (authBtnSidebar) {
+                    authBtnSidebar.textContent = cabinetLabel;
+                }
+                if (sidebarDashboardLink) {
+                    sidebarDashboardLink.style.display = '';
+                }
             } else {
-                authBtn.innerHTML = translations[currentLang]?.tab_login || 'Вход';
-                authBtn.onclick = function() { showModal('login'); };
+                if (authBtn) {
+                    authBtn.innerHTML = loginLabel;
+                    authBtn.title = loginLabel;
+                    authBtn.onclick = function() { showModal('login'); };
+                }
+                if (authBtnSidebar) {
+                    authBtnSidebar.textContent = loginLabel;
+                }
+                if (sidebarDashboardLink) {
+                    sidebarDashboardLink.style.display = 'none';
+                }
             }
         }
 
-        function showDashboardTab(tab) {
+        function showDashboardTab(tab, event) {
             document.querySelectorAll('.dashboard-menu a').forEach(a => a.classList.remove('active'));
-            event.target.closest('a').classList.add('active');
+            if (event && event.target) {
+                const activeLink = event.target.closest('a');
+                if (activeLink) activeLink.classList.add('active');
+            }
             document.getElementById('dashboard-overview').style.display = 'none';
             document.getElementById('dashboard-applications').style.display = 'none';
             document.getElementById('dashboard-resume').style.display = 'none';
+            document.getElementById('dashboard-profile').style.display = 'none';
             const tabEl = document.getElementById('dashboard-' + tab);
             if (tabEl) tabEl.style.display = 'block';
+            if (tab === 'applications' || tab === 'resume' || tab === 'profile' || tab === 'overview') refreshDashboard();
         }
 
-        function saveResume() { alert(t('alert_resume_saved', 'Резюме сохранено!')); }
-        function saveSettings() { alert(t('alert_settings_saved', 'Настройки сохранены!')); }
-        function applyJob(jobTitle) {
+        async function saveResume() {
+            if (!isLoggedIn || !currentUser?.id) {
+                showModal('login');
+                return;
+            }
+            const resume = {
+                name: document.getElementById('resumeName')?.value.trim() || currentUser.name,
+                profession: document.getElementById('resumeProfession')?.value.trim() || '',
+                experience: document.getElementById('resumeExperience')?.value.trim() || ''
+            };
+            await MigrantKZApi.updateUser(currentUser.id, { resume });
+            if (resume.name) {
+                currentUser.name = resume.name;
+                localStorage.setItem('user', JSON.stringify(currentUser));
+                refreshDashboard();
+            }
+            alert(t('alert_resume_saved', 'Резюме сохранено!'));
+        }
+
+        async function applyJob(jobTitle) {
             if (!isLoggedIn) { showModal('login'); return; }
             const button = (typeof event !== 'undefined' && event && event.target) ? event.target.closest('button') : null;
             const card = button ? button.closest('.job-card') : null;
             const localizedTitle = card?.querySelector('.job-title')?.textContent || jobTitle;
+            const company = card?.querySelector('.job-company')?.textContent || '';
+            const now = new Date();
+            const date = String(now.getDate()).padStart(2, '0') + '.' + String(now.getMonth() + 1).padStart(2, '0') + '.' + now.getFullYear();
+
+            if (currentUser?.id) {
+                await MigrantKZApi.addApplication(currentUser.id, {
+                    title: localizedTitle,
+                    company,
+                    date: t('status_pending', 'Рассматривается') + ' · ' + date
+                });
+            }
             alert(t('alert_apply_sent_prefix', 'Ваш отклик на вакансию "') + localizedTitle + t('alert_apply_sent_suffix', '" отправлен!'));
         }
         function applyJobFromButton(button) { applyJob(button?.dataset?.jobTitle || ''); }
@@ -2128,29 +2908,20 @@
             alert(`${t(titleKey, '')}\n\n${t(excerptKey, '')}`);
         }
 
-        function refreshSharedDataFromStorage(force = false) {
+        async function refreshSharedDataFromStorage(force = false) {
             const raw = localStorage.getItem(SHARED_DATA_KEY) || '';
             if (!force && raw === lastSharedDataJson) return;
-            lastSharedDataJson = raw;
-            const shared = getSharedData();
-            if (!shared) {
-                showFaqDebug('FAQ: локальные данные не найдены или содержат ошибку.');
-            } else {
-                showFaqDebug(`FAQ: загружено ${shared.faq.length} вопросов.`);
+            if (force && window.MigrantKZApi) {
+                await MigrantKZApi.loadData(true);
             }
+            lastSharedDataJson = localStorage.getItem(SHARED_DATA_KEY) || '';
             applySharedDataOverrides();
             updateFaqSection();
+            if (isLoggedIn) refreshDashboard();
             const jobsPage = document.getElementById('jobs-page');
             if (jobsPage && jobsPage.style.display === 'block') {
                 filterJobs();
             }
-        }
-
-        function showFaqDebug(message) {
-            const debugEl = document.getElementById('faqDebug');
-            if (!debugEl) return;
-            debugEl.textContent = message;
-            debugEl.style.display = 'block';
         }
 
         // If data is changed in admin.html (same origin), update UI automatically.
@@ -2168,6 +2939,34 @@
 
         document.getElementById('modal').addEventListener('click', function(e) { if (e.target === this) { closeModal(); } });
         document.addEventListener('click', function(e) { if (!e.target.closest('.lang-toggle') && !e.target.closest('.lang-dropdown')) { document.getElementById('langDropdown').classList.remove('show'); } });
+
+        // Mobile-specific: Hide unnecessary content on mobile devices
+        function setupMobileView() {
+            const isMobile = window.innerWidth <= 768;
+            if (isMobile) {
+                // Close sidebar on mobile view setup
+                closeSidebar();
+                // Hide unnecessary sections on mobile
+                const testimonials = document.querySelector('.testimonials');
+                const faqSection = document.querySelector('.faq');
+                const contactSection = document.querySelector('.contact');
+                const aboutSection = document.querySelector('.about');
+                const blogSection = document.querySelector('.blog');
+                const firstFeatures = document.querySelectorAll('.features')[1]; // Hide second features (Почему выбирают нас)
+                
+                if (testimonials) testimonials.style.display = 'none';
+                if (faqSection) faqSection.style.display = 'none';
+                if (contactSection) contactSection.style.display = 'none';
+                if (aboutSection) aboutSection.style.display = 'none';
+                if (blogSection) blogSection.style.display = 'none';
+                if (firstFeatures) firstFeatures.style.display = 'none';
+            }
+        }
+
+        // Run on page load
+        document.addEventListener('DOMContentLoaded', setupMobileView);
+        // Also run on resize
+        window.addEventListener('resize', setupMobileView);
     </script>
 </body>
 </html>

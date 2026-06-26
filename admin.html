@@ -51,6 +51,207 @@
             border-top: none;
             font-weight: 500;
         }
+        
+        @media (max-width: 768px) {
+            .admin-header h1 {
+                font-size: 16px;
+                padding: 0 8px;
+            }
+            
+            .admin-header {
+                padding: 8px 12px;
+            }
+            
+            .container {
+                padding: 0 8px;
+            }
+            
+            .nav-tabs {
+                flex-wrap: wrap;
+                gap: 0;
+            }
+            
+            .nav-tabs .nav-link {
+                padding: 6px 8px !important;
+                font-size: 11px;
+                border-radius: 6px;
+                margin: 2px 2px;
+                flex: 1;
+                min-width: 60px;
+                text-align: center;
+            }
+            
+            .d-flex {
+                flex-wrap: wrap;
+                gap: 4px !important;
+            }
+            
+            .d-flex.align-items-center {
+                width: 100%;
+            }
+            
+            .d-flex > h3 {
+                width: 100%;
+                margin-bottom: 8px;
+            }
+            
+            .d-flex > input,
+            .d-flex > select,
+            .d-flex > button {
+                flex: 1;
+                min-width: 70px;
+                font-size: 11px;
+                padding: 6px 6px;
+            }
+            
+            .form-control-sm {
+                width: auto !important;
+                font-size: 11px;
+                padding: 4px 6px;
+            }
+            
+            .form-select-sm {
+                width: auto !important;
+                font-size: 11px;
+                padding: 4px 6px;
+            }
+            
+            .btn-sm {
+                padding: 3px 6px;
+                font-size: 10px;
+            }
+            
+            .table {
+                font-size: 11px;
+                margin-bottom: 0;
+            }
+            
+            .table th {
+                padding: 6px 3px;
+                font-size: 10px;
+            }
+            
+            .table td {
+                padding: 6px 3px;
+                font-size: 10px;
+            }
+            
+            .card {
+                padding: 8px !important;
+                border-radius: 8px;
+            }
+            
+            .mt-4 {
+                margin-top: 8px !important;
+            }
+            
+            .mb-3 {
+                margin-bottom: 6px !important;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .admin-header {
+                padding: 6px 8px;
+            }
+            
+            .admin-header h1 {
+                font-size: 14px;
+                margin: 0;
+            }
+            
+            .nav-tabs {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                white-space: nowrap;
+                margin-bottom: 8px;
+            }
+            
+            .nav-tabs .nav-link {
+                padding: 4px 6px !important;
+                font-size: 10px;
+                margin: 2px 1px;
+                min-width: 50px;
+                flex-shrink: 0;
+            }
+            
+            .container {
+                padding: 0 6px;
+            }
+            
+            .d-flex {
+                gap: 2px !important;
+            }
+            
+            .d-flex > input,
+            .d-flex > select,
+            .d-flex > button {
+                font-size: 10px;
+                padding: 4px 4px;
+                min-width: 50px;
+            }
+            
+            .form-control,
+            .form-select {
+                font-size: 10px;
+                padding: 4px 6px;
+            }
+            
+            .table {
+                font-size: 9px;
+            }
+            
+            .table th,
+            .table td {
+                padding: 4px 2px;
+                word-break: break-word;
+            }
+            
+            .btn-sm {
+                padding: 2px 4px;
+                font-size: 9px;
+            }
+            
+            .modal {
+                padding: 0 !important;
+            }
+            
+            .modal-dialog {
+                margin: 6px;
+                width: calc(100% - 12px);
+            }
+            
+            .modal-content {
+                padding: 0;
+            }
+            
+            .modal-header {
+                padding: 8px 10px;
+            }
+            
+            .modal-title {
+                font-size: 13px;
+            }
+            
+            .modal-body {
+                padding: 8px 10px;
+            }
+            
+            .modal-footer {
+                padding: 6px 10px;
+                gap: 4px;
+            }
+            
+            .form-label {
+                font-size: 10px;
+                margin-bottom: 2px;
+            }
+            
+            .form-control,
+            .form-select {
+                font-size: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -152,13 +353,7 @@
                                 <th>Действия</th>
                             </tr>
                         </thead>
-                        <tbody id="users-list">
-                            <tr>
-                                <td colspan="5" class="text-muted">
-                                    Пользователи не синхронизируются без бэкенда (site хранит аккаунт в localStorage).
-                                </td>
-                            </tr>
-                        </tbody>
+                        <tbody id="users-list"></tbody>
                     </table>
                 </div>
             </div>
@@ -499,42 +694,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/migrantkz-api.js"></script>
     <script>
-        const SHARED_DATA_KEY = 'migrantkz_shared_data_v1';
-        const SHARED_UPDATE_CHANNEL = 'migrantkz_shared_data_channel';
-        const broadcastChannel = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel(SHARED_UPDATE_CHANNEL) : null;
-
-        const defaultData = {
-            jobs: [
-                { id: Date.now() + 1, title: 'Водитель-международник', salary: '250 000 ₸', location: 'Алматы', company: 'ТОО "КазТрансЛогистик"', tags: ['Транспорт', 'Опыт от 3 лет'] },
-                { id: Date.now() + 2, title: 'Сварщик', salary: '180 000 ₸', location: 'Астана', company: 'ТОО "КазСтройМонтаж"', tags: ['Строительство', 'Сертификат'] },
-                { id: Date.now() + 3, title: 'Повар', salary: '150 000 ₸', location: 'Шымкент', company: 'Ресторан "Шахрияр"', tags: ['Общепит', 'Опыт от 1 года'] },
-                { id: Date.now() + 11, title: 'Уборщик', salary: '120 000 ₸', location: 'Актау', company: 'ООО "КазМаркет"', tags: ['Уборка', 'Без опыта'] },
-                { id: Date.now() + 12, title: 'Строитель', salary: '200 000 ₸', location: 'Атырау', company: 'ТОО "СтройПлюс"', tags: ['Строительство', 'Опыт от 2 лет'] },
-                { id: Date.now() + 13, title: 'Электрик', salary: '220 000 ₸', location: 'Орал', company: 'ОАО "ЭнергоСервис"', tags: ['Электричество', 'Сертификат'] },
-                { id: Date.now() + 14, title: 'Механик', salary: '190 000 ₸', location: 'Павлодар', company: 'ТОО "АвтоМастер"', tags: ['Автосервис', 'Опыт от 3 лет'] }
-            ],
-            employers: [
-                { id: Date.now() + 4, name: 'КазТрансЛогистик', rating: 4.5, status: 'verified', description: 'Надежный работодатель с 15-летним опытом в сфере логистики.' },
-                { id: Date.now() + 20, name: 'ТОО "КазСтройМонтаж"', rating: 4.2, status: 'verified', description: 'Строительная компания, работает по всему Казахстану.' },
-                { id: Date.now() + 21, name: 'Ресторан "Шахрияр"', rating: 4.0, status: 'verified', description: 'Сеть ресторанов узбекской и казахской кухни.' },
-                { id: Date.now() + 22, name: 'ООО "КазМаркет"', rating: 3.8, status: 'pending', description: 'Торговая сеть, ищет уборщиков и продавцов.' },
-                { id: Date.now() + 23, name: 'ТОО "СтройПлюс"', rating: 4.3, status: 'verified', description: 'Профессиональная строительная организация.' }
-            ],
-            reviews: [
-                { id: Date.now() + 5, company: 'КазТрансЛогистик', author: 'Александр И.', text: 'Отличная компания! Работаю уже 2 года, всегда вовремя платят.', date: '15.04.2026' },
-                { id: Date.now() + 30, company: 'ТОО "КазСтройМонтаж"', author: 'Игорь П.', text: 'Хорошие условия труда, начальник справедливый. Рекомендую!', date: '12.04.2026' },
-                { id: Date.now() + 31, company: 'Ресторан "Шахрияр"', author: 'Мария К.', text: 'Дружный коллектив, интересная работа. Зарплату платят в срок.', date: '10.04.2026' },
-                { id: Date.now() + 32, company: 'КазТрансЛогистик', author: 'Камал М.', text: 'Честная компания, есть социальные гарантии для сотрудников.', date: '08.04.2026' },
-                { id: Date.now() + 33, company: 'ТОО "СтройПлюс"', author: 'Азамат Б.', text: 'Нормальная зарплата, выплачивают все по договору.', date: '05.04.2026' }
-            ],
-            faq: [
-                { id: Date.now() + 6, question: 'Как найти работу через MigrantKZ?', answer: 'Просто зарегистрируйтесь на сайте, создайте резюме и начните откликаться на вакансии.' },
-                { id: Date.now() + 7, question: 'Как проверить работодателя?', answer: 'Введите название компании в разделе "Проверка работодателя".' },
-                { id: Date.now() + 8, question: 'Какие документы нужны для работы в Казахстане?', answer: 'Паспорт, миграционная карта, разрешение на работу, регистрация по месту жительства.' }
-            ]
-        };
-
         let sharedData = null;
         let currentEditJobId = null;
         let currentEditEmployerId = null;
@@ -634,30 +795,17 @@
             return list;
         }
 
-        function loadData() {
-            const raw = localStorage.getItem(SHARED_DATA_KEY);
-            if (raw) {
-                try {
-                    sharedData = JSON.parse(raw);
-                } catch (e) {
-                    sharedData = JSON.parse(JSON.stringify(defaultData));
-                }
-            } else {
-                sharedData = JSON.parse(JSON.stringify(defaultData));
-                saveData();
-            }
-            sharedData.jobs = Array.isArray(sharedData.jobs) ? sharedData.jobs : [];
-            sharedData.employers = Array.isArray(sharedData.employers) ? sharedData.employers : [];
-            sharedData.reviews = Array.isArray(sharedData.reviews) ? sharedData.reviews : [];
-            sharedData.faq = Array.isArray(sharedData.faq) ? sharedData.faq : [];
+        async function loadData() {
+            sharedData = await MigrantKZApi.loadData(true);
         }
 
-        function saveData() {
-            localStorage.setItem(SHARED_DATA_KEY, JSON.stringify(sharedData));
-            localStorage.setItem(SHARED_DATA_KEY + '_updated', Date.now().toString());
-            if (broadcastChannel) {
-                broadcastChannel.postMessage({ type: 'shared-data-updated' });
-            }
+        async function saveData() {
+            sharedData = await MigrantKZApi.saveData(sharedData);
+        }
+
+        async function persistChanges() {
+            await saveData();
+            rerender();
         }
 
         function statusBadge(status) {
@@ -716,14 +864,40 @@
             `).join('');
         }
 
+        function renderUsers() {
+            const tbody = document.getElementById('users-list');
+            const users = Array.isArray(sharedData?.users) ? sharedData.users : [];
+            if (!tbody) return;
+            if (!users.length) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-muted">Пользователей пока нет. Они появятся после регистрации на сайте.</td>
+                    </tr>
+                `;
+                return;
+            }
+            tbody.innerHTML = users.map((user) => `
+                <tr>
+                    <td>${escapeHtml(user.name)}</td>
+                    <td>${escapeHtml(user.phone || user.email || '-')}</td>
+                    <td>${escapeHtml(user.language || '-')}</td>
+                    <td>${escapeHtml(user.registered || '-')}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteUser(${user.id})">Удалить</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
         function rerender() {
             renderJobs();
             renderEmployers();
             renderReviews();
+            renderUsers();
             renderFaq();
         }
 
-        function addJob() {
+        async function addJob() {
             const title = document.getElementById('jobTitleInput').value.trim();
             const salary = document.getElementById('jobSalaryInput').value.trim();
             const location = document.getElementById('jobLocationInput').value.trim();
@@ -745,8 +919,7 @@
                 company: description || 'Компания не указана',
                 tags
             });
-            saveData();
-            rerender();
+            await persistChanges();
             bootstrap.Modal.getInstance(document.getElementById('addJobModal')).hide();
             document.getElementById('jobTitleInput').value = '';
             document.getElementById('jobSalaryInput').value = '';
@@ -789,8 +962,7 @@
             job.company = company || 'Компания не указана';
             job.tags = tags;
 
-            saveData();
-            rerender();
+            persistChanges();
             bootstrap.Modal.getInstance(document.getElementById('editJobModal')).hide();
         }
 
@@ -804,8 +976,7 @@
                 return;
             }
             sharedData.employers.unshift({ id: Date.now(), name, rating, status, description });
-            saveData();
-            rerender();
+            persistChanges();
             bootstrap.Modal.getInstance(document.getElementById('addEmployerModal')).hide();
             document.getElementById('employerNameInput').value = '';
             document.getElementById('employerDescriptionInput').value = '';
@@ -841,8 +1012,7 @@
             employer.rating = Number.isFinite(rating) ? rating : 0;
             employer.status = status;
 
-            saveData();
-            rerender();
+            persistChanges();
             bootstrap.Modal.getInstance(document.getElementById('editEmployerModal')).hide();
         }
 
@@ -857,8 +1027,7 @@
             const now = new Date();
             const date = String(now.getDate()).padStart(2, '0') + '.' + String(now.getMonth() + 1).padStart(2, '0') + '.' + now.getFullYear();
             sharedData.reviews.unshift({ id: Date.now(), company, author, text, date });
-            saveData();
-            rerender();
+            persistChanges();
             bootstrap.Modal.getInstance(document.getElementById('addReviewModal')).hide();
             document.getElementById('reviewCompanyInput').value = '';
             document.getElementById('reviewAuthorInput').value = '';
@@ -895,30 +1064,32 @@
             review.text = text;
             review.date = date || '-';
 
-            saveData();
-            rerender();
+            persistChanges();
             bootstrap.Modal.getInstance(document.getElementById('editReviewModal')).hide();
         }
 
         function deleteJob(id) {
             if (!confirm('Удалить вакансию?')) return;
             sharedData.jobs = sharedData.jobs.filter((job) => job.id !== id);
-            saveData();
-            rerender();
+            persistChanges();
         }
 
         function deleteEmployer(id) {
             if (!confirm('Удалить работодателя?')) return;
             sharedData.employers = sharedData.employers.filter((employer) => employer.id !== id);
-            saveData();
-            rerender();
+            persistChanges();
         }
 
         function deleteReview(id) {
             if (!confirm('Удалить отзыв?')) return;
             sharedData.reviews = sharedData.reviews.filter((review) => review.id !== id);
-            saveData();
-            rerender();
+            persistChanges();
+        }
+
+        function deleteUser(id) {
+            if (!confirm('Удалить пользователя?')) return;
+            sharedData.users = sharedData.users.filter((user) => user.id !== id);
+            persistChanges();
         }
 
         function renderFaq() {
@@ -944,8 +1115,7 @@
                 return;
             }
             sharedData.faq.push({ id: Date.now(), question, answer });
-            saveData();
-            rerender();
+            persistChanges();
             bootstrap.Modal.getInstance(document.getElementById('addFaqModal')).hide();
             document.getElementById('faqQuestionInput').value = '';
             document.getElementById('faqAnswerInput').value = '';
@@ -971,23 +1141,26 @@
             }
             item.question = question;
             item.answer = answer;
-            saveData();
-            rerender();
+            persistChanges();
             bootstrap.Modal.getInstance(document.getElementById('editFaqModal')).hide();
         }
 
         function deleteFaq(id) {
             if (!confirm('Удалить вопрос?')) return;
             sharedData.faq = sharedData.faq.filter((f) => f.id !== id);
-            saveData();
-            rerender();
+            persistChanges();
         }
 
         let currentEditFaqId = null;
 
-        document.addEventListener('DOMContentLoaded', function () {
-            loadData();
+        document.addEventListener('DOMContentLoaded', async function () {
+            await loadData();
             rerender();
+
+            setInterval(async () => {
+                await loadData();
+                rerender();
+            }, 5000);
 
             const jobsSearch = document.getElementById('jobsSearchInput');
             const jobsSort = document.getElementById('jobsSortSelect');

@@ -1,0 +1,14 @@
+{
+  "name": "migrantkz",
+  "version": "1.0.0",
+  "description": "MigrantKZ — платформа поиска работы для мигрантов в Казахстане",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}

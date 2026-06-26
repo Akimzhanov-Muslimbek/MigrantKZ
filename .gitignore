@@ -1,0 +1,36 @@
+# Зависимости и сборка
+node_modules/
+package-lock.json
+
+# Данные сервера (пользователи, не для GitHub Pages)
+data/
+data/store.json
+
+# Переменные окружения и секреты
+.env
+.env.*
+*.pem
+*.key
+
+# Логи и кэш
+logs/
+*.log
+npm-debug.log*
+.cache/
+
+# ОС
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE и редакторы
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Временные файлы
+tmp/
+temp/
+*.tmp
